@@ -48,7 +48,7 @@ class YearChart {
     // ******* TODO: PART I *******
 
     let years = new Array();
-    for(var i = 1970; i < 2016; i++){
+    for(var i = 1971; i < 2016; i++){
       years.push(i);
     }
     let width = this.svgWidth;
@@ -84,6 +84,7 @@ class YearChart {
         .style("stroke", "#A0A0A0")
         .style("stroke-dasharray", "2,2");
 
+
     this.svg.selectAll('circle')
       .data(data)
       .enter()
@@ -97,18 +98,25 @@ class YearChart {
         return color;
       })
       .attr("cx", function(d,i) {
-        return (width / 45  ) * i - 10;
+        return (width / 45  ) * i + 10;
       })
       .attr("cy", (this.svgHeight / 2))
       .data(setsperyear)
       .attr("r", d => Math.log(d) *3)
-      .data(data)
+      .data(years)
       .on('mouseover', function(d,i){
-        console.log(d.Year);
+        console.log(d);
+
         d3.select(this)
           .transition()
           .style("stroke", "black")
           .style("stroke-width", "3");
+      })
+      .on('mouseout', function(d,i){
+        d3.select(this)
+          .transition()
+          .style("stroke", "")
+          .style("stroke-width", "0");
       })
       .on('click', function(d, i) {
         d3.select(this)
@@ -117,7 +125,7 @@ class YearChart {
           .style("stroke-width", "3");
         })
       ;
-      
+      /*
       this.svg.selectAll('text')
       .data(years)
       .enter()
@@ -128,7 +136,7 @@ class YearChart {
       .attr("y", (this.svgHeight / 2) + 20)
       .style("font-size", "10px")
       .html(d => d);
-
+      */
     //The circles should be colored based on the winning party for that year
     //HINT: Use the .yearChart class to style your circle elements
     //HINT: Use the chooseClass method to choose the color corresponding to the winning party.
