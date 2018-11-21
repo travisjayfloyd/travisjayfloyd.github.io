@@ -151,3 +151,14 @@ h3{
 }
 
 
+#bar-chart {
+    width: 500px;
+    margin-right: 20px;
+    float: left;
+
+}
+
+.view {
+    padding: 0.5em;
+
+}

@@ -9,6 +9,7 @@ class YearChart {
   constructor (legos) {
 
     this.legos = legos;
+    this.tablechart = new TableChart(legos);
     
     // Initializes the svg elements required for this chart
     this.margin = {top: 10, right: 20, bottom: 30, left: 50};
@@ -96,8 +97,7 @@ class YearChart {
       })
       .on('click', function(d, i) {
         console.log(d);
-        let tablechart = new tablechart(data);
-        tablechart.updateTable(d, data);
+        tablechart.updateTable(d);
         d3.select(this)
           .transition()
           .style("stroke", "black")

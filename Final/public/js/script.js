@@ -7,5 +7,7 @@ d3.csv("data/legosets.csv").then(function(legos) {
   console.log(legos);
   let yearChart = new YearChart(legos);
   yearChart.update(legos);
+  let topThemesBarChart = new TopThemesBarChart(legos);
+  topThemesBarChart.update(legos);
 });
 

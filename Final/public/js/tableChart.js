@@ -1,15 +1,14 @@
 /** Class implementing the table. */
-class Table {
+class TableChart {
     /**
      * Creates a Table Object
      */
-    constructor(year, data) {
+    constructor(data) {
   
       // Create list of all elements that will populate the table
       // Initially, the tableElements will be identical to the legoData
-      this.tableElements = null; // 
-      this.year = year;
-      this.data = data;
+      this.tableElements = data.slice();
+      this.legoData = data;
   
       // Default values for the Table Headers
       this.tableHeaders = ["Name", "Subtheme", "Release Year", "Pieces", "Price"];
@@ -24,6 +23,19 @@ class Table {
       this.bar = {
         "height": 20
       };
+
+      // Set variables for commonly accessed data columns
+      // this.goalsMadeHeader = 'Goals Made';
+      // this.goalsConcededHeader = 'Goals Conceded';
+
+      // // Setup the scales 
+      // this.goalScale = d3.scaleLinear();
+      // this.barChartScale = d3.scaleLinear();
+      // this.colorScale = d3.scaleLinear()
+
+      // this.goalScaleWidth = 180;
+      // this.goalScaleHeight = 30;
+      // this.oldXRows = [];
   
     }
   
@@ -34,7 +46,7 @@ class Table {
      * Also calculates aggregate values of goals, wins, losses and total
      * games as a function of country.
      */
-    createTable(year, data) {
+    createTable() {
   
       
       
@@ -45,7 +57,7 @@ class Table {
      * Updates the table contents with a row for each element in the global
      * variable tableElements.
      */
-    updateTable(year, data) {
+    updateTable(year) {
       console.log("in the table");
       console.log(year);
       console.log(table);

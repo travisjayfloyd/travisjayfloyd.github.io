@@ -75,3 +75,4 @@ November 26 - Must-Have Features, *Optional Features
 November 30 - Final Submission
 
 
+use python -m SimpleHTTPServer (port) to run project locally 
