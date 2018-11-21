@@ -1,5 +1,5 @@
 /** Class implementing the table. */
-class Table {
+class tableChart {
     /**
      * Creates a Table Object
      */
@@ -48,8 +48,114 @@ class Table {
     updateTable(year, data) {
       console.log("in the table");
       console.log(year);
-      console.log(table);
-  
+      console.log(data);
+
+    let fullarray = new Array();
+
+    if(year == null){
+        for(var i = 0; i < data.length; i++){
+            let obj = {};
+            obj['Name'] = data[i].Name;
+            obj['Theme'] = data[i].Theme;
+            obj['Subtheme'] = data[i].Subtheme;
+            obj['ReleaseYear'] = data[i].Year;
+            obj['Pieces'] = data[i].Pieces;
+            obj['Price'] = data[i].USD_MSRP;
+            fullarray.push(obj);
+        }
+    }
+    else{
+        for(var i = 0; i < data.length; i++){
+            if(data[i].Year == year){
+                let obj = {};
+                obj['Name'] = data[i].Name;
+                obj['Theme'] = data[i].Theme;
+                obj['Subtheme'] = data[i].Subtheme;
+                obj['ReleaseYear'] = data[i].Year;
+                obj['Pieces'] = data[i].Pieces;
+                obj['Price'] = data[i].USD_MSRP;
+                fullarray.push(obj);
+            }
+            else{
+                
+            }
+        }
+    }
+
+    // Create table rows
+
+    let rows = d3.select("#legoTable").select("tbody").selectAll("tr")
+      .data(fullarray);
+
+    let enterSet = rows.enter();
+    let updateSet = rows;
+
+    rows.exit().remove();
+
+
+    enterSet.append("tr").attr('class', 'dataRow');
+
+    d3.selectAll('.dataRow').html("");
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Name];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Theme];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Subtheme];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.ReleaseYear];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+      
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Pieces];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Price];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
   
     };
   
