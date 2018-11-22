@@ -75,10 +75,11 @@ class MostExpensiveSetsBarChart {
     }
 
     getMostExpensiveSets(sets, howMany) {
-      sets.sort(function(a, b) {
+      let mostExpensiveSets = sets.filter(set=>set.USD_MSRP != "NA");
+      mostExpensiveSets.sort(function(a, b) {
         return parseInt(b.USD_MSRP) - parseInt(a.USD_MSRP);
       });
-      return sets.slice(0, howMany);
+      return mostExpensiveSets.slice(0, howMany);
     }
 
   }

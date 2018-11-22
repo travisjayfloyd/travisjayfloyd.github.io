@@ -13,7 +13,7 @@ d3.csv("data/legosets.csv").then(function(legoSets) {
     biggestSetsBarChart.update(legoSets);
     let mostExpensiveSetsBarChart = new MostExpensiveSetsBarChart(legoSets);
     mostExpensiveSetsBarChart.update(legoSets);
-    let yearChart = new YearChart(legoSets, topThemesBarChart, biggestSetsBarChart, mostExpensiveSetsBarChart);
+    let yearChart = new YearChart(legoSets, table, topThemesBarChart, biggestSetsBarChart, mostExpensiveSetsBarChart);
     yearChart.update(legoSets);
 });
 
