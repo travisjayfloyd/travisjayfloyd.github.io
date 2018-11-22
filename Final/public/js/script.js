@@ -1,14 +1,19 @@
 // Load the lego data.
-d3.csv("data/legosets.csv").then(function(legos) {
-  legos.forEach(function (d){
-    d.Year = Number(d.Year);
-  })
-  console.log(legos);
-  let table = new TableChart(legos);
-  // table.update(null, legos)
-  let yearChart = new YearChart(legos);
-  yearChart.update(legos);
-  let topThemesBarChart = new TopThemesBarChart(legos);
-  topThemesBarChart.update(legos);
+d3.csv("data/legosets.csv").then(function(legoSets) {
+    console.log("legoSets:", legoSets);
+    legoSets.forEach(function (d){
+      d.Year = Number(d.Year);
+    })
+    console.log("legoSets:", legoSets);
+    let table = new TableChart(legoSets);
+    // table.update(null, legos)
+    let topThemesBarChart = new TopThemesBarChart(legoSets);
+    topThemesBarChart.update(legoSets);
+    let biggestSetsBarChart = new BiggestSetsBarChart(legoSets);
+    biggestSetsBarChart.update(legoSets);
+    let mostExpensiveSetsBarChart = new MostExpensiveSetsBarChart(legoSets);
+    mostExpensiveSetsBarChart.update(legoSets);
+    let yearChart = new YearChart(legoSets, topThemesBarChart, biggestSetsBarChart, mostExpensiveSetsBarChart);
+    yearChart.update(legoSets);
 });
 

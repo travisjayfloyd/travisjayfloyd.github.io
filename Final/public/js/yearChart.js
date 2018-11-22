@@ -6,11 +6,14 @@ class YearChart {
    * @param table instance of the tablechart
    * @param legos instance of Legos
    */
-  constructor (legos, table) {
+  constructor (legos, table, topThemesChart, biggestSetsChart, mostExpensiveSetsChart) {
 
     this.table = table;
     this.legos = legos;
     this.tablechart = new TableChart(legos);
+    this.biggestSetsChart = biggestSetsChart;
+    this.topThemesChart = topThemesChart;
+    this.mostExpensiveSetsChart = mostExpensiveSetsChart;
     
     // Initializes the svg elements required for this chart
     this.margin = {top: 10, right: 20, bottom: 30, left: 50};
@@ -99,6 +102,11 @@ class YearChart {
         console.log(d);
 
         ctx.tablechart.update(d);
+        let yearSets = ctx.legos.filter(legoset => legoset.Year == d);
+        ctx.topThemesChart.update(yearSets);
+        ctx.biggestSetsChart.update(yearSets);
+        ctx.mostExpensiveSetsChart.update(yearSets);
+
         d3.select(this)
           .transition()
           .style("stroke", "black")

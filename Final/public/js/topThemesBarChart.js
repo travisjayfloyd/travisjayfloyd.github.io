@@ -34,21 +34,21 @@ class TopThemesBarChart {
       .domain([yDataMax, 0])
       .range(["lightblue", "darkblue"]);
 
-      // Create the axes (hint: use #xAxis and #yAxis)
-      let xAxis = d3.axisBottom().scale(xScale);
-      d3.select("#xAxis")
+      // Create the axes (hint: use #xAxisThemes and #yAxisThemes)
+      let xAxisThemes = d3.axisBottom().scale(xScale);
+      d3.select("#xAxisThemes")
         .attr("transform", "translate(" + xPadding + "," + (height - yPadding) + ")")
-        .call(xAxis)
+        .call(xAxisThemes)
         .selectAll("text")
         .attr("y", 0)
         .attr("x", 10)
         .attr("transform", "rotate(90)")
         .style("text-anchor", "start");
 
-      let yAxis = d3.axisLeft(yScale);
-      d3.select("#yAxis")
+      let yAxisThemes = d3.axisLeft(yScale);
+      d3.select("#yAxisThemes")
         .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
-        .call(yAxis);
+        .call(yAxisThemes);
 
         let bars = d3.select("#topThemesBars")
         let rects = bars.selectAll("rect").data(topThemes);
@@ -90,7 +90,7 @@ class TopThemesBarChart {
         return parseInt(b.sum) - parseInt(a.sum);
       });
       
-      return sumThemes.slice(0, howMany - 1);
+      return sumThemes.slice(0, howMany);
     }
 
   }
