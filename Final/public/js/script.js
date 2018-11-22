@@ -5,7 +5,7 @@ d3.csv("data/legosets.csv").then(function(legos) {
   })
   console.log(legos);
   let table = new TableChart(legos);
-  table.update(null, legos)
+  // table.update(null, legos)
   let yearChart = new YearChart(legos);
   yearChart.update(legos);
   let topThemesBarChart = new TopThemesBarChart(legos);

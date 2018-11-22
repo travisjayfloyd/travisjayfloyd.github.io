@@ -50,7 +50,7 @@ class TopThemesBarChart {
         .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
         .call(yAxis);
 
-        let bars = d3.select("#bars")
+        let bars = d3.select("#topThemesBars")
         let rects = bars.selectAll("rect").data(topThemes);
         rects
           .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
