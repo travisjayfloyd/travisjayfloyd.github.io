@@ -28,22 +28,10 @@ h1 {
     /*stroke: #e5e5e5;*/
 }
 
-.electoralVotesNote, .votesPercentageNote{
-    text-anchor:middle;
-    font-size: 24px;
-}
-
-.electoralVoteText, .votesPercentageText{
-    /*font-size: 35px;*/
-    font-size: 24px;
-}
 .end{
     text-anchor:end;
 }
 
-.nomineeInfoText{
-    font-size: 36px;
-}
 .Axis{
     stroke: #eee;
     stroke-width: 4;
@@ -57,10 +45,6 @@ h1 {
     display: inline-block;
     width: 30%;
     float:right;
-}
-
-.electoralVotes{
-    stroke: #eee;
 }
 
 .middlePoint{
@@ -79,26 +63,6 @@ h1 {
 .lineChart{
     stroke: #A0A0A0;
     stroke-dasharray: 2,2;
-}
-
-.republican{
-    fill: #de2d26;
-    color: #de2d26;
-    text-anchor:end;
-}
-.democrat{
-    fill: #3182bd;
-    text-anchor:start;
-    color: #3182bd;
-}
-.independent{
-    fill: #45AD6A;
-    color: #45AD6A;
-    text-anchor:start;
-}
-
-.votesPercentage{
-    stroke: #eee;
 }
 
 .highlighted{

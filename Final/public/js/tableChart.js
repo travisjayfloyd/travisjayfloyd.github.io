@@ -1,4 +1,5 @@
 /** Class implementing the table. */
+
 class TableChart {
     /**
      * Creates a Table Object
@@ -57,11 +58,119 @@ class TableChart {
      * Updates the table contents with a row for each element in the global
      * variable tableElements.
      */
-    updateTable(year) {
+    update(year) {
       console.log("in the table");
       console.log(year);
-      console.log(table);
-  
+      console.log(this.legoData);
+
+    let fullarray = new Array();
+
+    if(year == null){
+        for(var i = 0; i < this.legoData.length; i++){
+            let obj = {};
+            obj['Name'] = this.legoData[i].Name;
+            obj['Theme'] = this.legoData[i].Theme;
+            obj['Subtheme'] = this.legoData[i].Subtheme;
+            obj['ReleaseYear'] = this.legoData[i].Year;
+            obj['Pieces'] = this.legoData[i].Pieces;
+            obj['Price'] = this.legoData[i].USD_MSRP;
+            fullarray.push(obj);
+        }
+    }
+    else{
+        for(var i = 0; i < this.legoData.length; i++){
+            if(this.legoData[i].Year == year){
+                let obj = {};
+                obj['Name'] = this.legoData[i].Name;
+                obj['Theme'] = this.legoData[i].Theme;
+                obj['Subtheme'] = this.legoData[i].Subtheme;
+                obj['ReleaseYear'] = this.legoData[i].Year;
+                obj['Pieces'] = this.legoData[i].Pieces;
+                obj['Price'] = this.legoData[i].USD_MSRP;
+                fullarray.push(obj);
+            }
+            else{
+                
+            }
+        }
+    }
+
+    console.log(fullarray);
+
+    // Create table rows
+
+    let rows = d3.select("#legoTable").select("tbody").selectAll("tr")
+      .data(fullarray);
+
+    let enterSet = rows.enter();
+    let updateSet = rows;
+
+    rows.exit().remove();
+
+
+    enterSet.append("tr").attr('class', 'dataRow');
+
+    d3.selectAll('.dataRow').html("");
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Name];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Theme];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Subtheme];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.ReleaseYear];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+      
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Pieces];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
+
+    d3.selectAll('.dataRow')
+      .selectAll("th")
+      .data(function(d) {
+        return [d.Price];
+      })
+      .enter()
+      .append("td")
+      .html(d => d)
+    ;
   
     };
   

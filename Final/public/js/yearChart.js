@@ -3,11 +3,12 @@ class YearChart {
 
   /**
    * Constructor for the Year Chart
-   *
+   * @param table instance of the tablechart
    * @param legos instance of Legos
    */
-  constructor (legos) {
+  constructor (legos, table) {
 
+    this.table = table;
     this.legos = legos;
     this.tablechart = new TableChart(legos);
     
@@ -32,6 +33,7 @@ class YearChart {
    * Creates a chart with circles representing each election year, populates text content and other required elements for the Year Chart
    */
   update (data) {
+    let ctx = this;
 
     let years = new Array();
     for(var i = 1971; i < 2016; i++){
@@ -61,8 +63,6 @@ class YearChart {
         .attr("y2", (this.svgHeight / 2))
         .style("stroke", "#A0A0A0")
         .style("stroke-dasharray", "2,2");
-
-    
 
     this.svg.selectAll('circle')
       .data(data)
@@ -97,7 +97,8 @@ class YearChart {
       })
       .on('click', function(d, i) {
         console.log(d);
-        tablechart.updateTable(d);
+
+        ctx.tablechart.update(d);
         d3.select(this)
           .transition()
           .style("stroke", "black")
@@ -105,43 +106,6 @@ class YearChart {
         
         })
       ;
-      /*
-      this.svg.selectAll('text')
-      .data(years)
-      .enter()
-      .append('text')
-			.attr("x", function(d,i) {
-        return (width / 45) * i +10;
-      })
-      .attr("y", (this.svgHeight / 2) + 20)
-      .style("font-size", "10px")
-      .html(d => d);
-      */
-    //The circles should be colored based on the winning party for that year
-    //HINT: Use the .yearChart class to style your circle elements
-    //HINT: Use the chooseClass method to choose the color corresponding to the winning party.
-
-    //Append text information of each year right below the corresponding circle
-    //HINT: Use .yeartext class to style your text elements
-
-    //Style the chart by adding a dashed line that connects all these years.
-    //HINT: Use .lineChart to style this dashed line
-
-    //Clicking on any specific year should highlight that circle and  update the rest of the visualizations
-    //HINT: You can get the d3 selection that was clicked on using
-    //   d3.select(d3.event.target)
-    //HINT: Use .highlighted class to style the highlighted circle
-
-    //Election information corresponding to that year should be loaded and passed to
-    // the update methods of other visualizations
-
-
-    //******* TODO: EXTRA CREDIT *******
-
-    //Implement brush on the year chart created above.
-    //Implement a call back method to handle the brush end event.
-    //Call the update method of shiftChart and pass the data corresponding to brush selection.
-    //HINT: Use the .brush class to style the brush.
 
   }
 
