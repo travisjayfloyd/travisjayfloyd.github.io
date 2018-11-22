@@ -13,9 +13,9 @@ class TopThemesBarChart {
       let topThemes = this.getTopThemes(legoEntries, 20);
       console.log(topThemes);
       let width = 500;
-      let height = 600;
+      let height = 260;
       let xPadding = 55;
-      let yPadding = 15;
+      let yPadding = 0;
       let themes = topThemes.map(function(obj){return obj.Theme});
       let yData = topThemes.map(function(obj){return obj.sum});
       let yDataMax = d3.max(yData);
