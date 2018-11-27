@@ -75,9 +75,15 @@ class YearChart {
           selectedYears.push(1971 + index);
         });
       }
+      let yearStr = ""
       if(selectedYears.length == 0)
-        selectedYears.push({YEAR: "No Years Selected"});
-      console.log("selected years: ", selectedYears);
+        yearStr = "No Year Selected";
+      else if(selectedYears.length == 1)
+        yearStr = selectedYears[0]
+      else 
+        yearStr = Math.min(...selectedYears) + " - " + Math.max(...selectedYears)
+      document.getElementById("year-list").innerHTML = "Years Selected: " + yearStr;
+      
       let yearSets = [];
       selectedYears.forEach(year => {
         ctx.legos.filter(legoset => legoset.Year == year).forEach(set=>yearSets.push(set));
