@@ -99,7 +99,6 @@ class YearChart {
           .style("stroke-width", "0");
       })
       .on('click', function(d, i) {
-        console.log(d);
 
         ctx.tablechart.update(d);
         let yearSets = ctx.legos.filter(legoset => legoset.Year == d);

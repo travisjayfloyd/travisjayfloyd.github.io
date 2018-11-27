@@ -10,15 +10,13 @@ class BiggestSetsBarChart {
 
     //This function accepts a list of set objects
     update(sets) {
-      let biggestSets = this.getBiggestSets(sets, 10);
-      console.log("biggest sets: ", biggestSets);
+      let biggestSets = this.getBiggestSets(sets, 20);
       let width = 500;
       let height = 260;
       let xPadding = 55;
       let yPadding = 0;
       let setNames = biggestSets.map(function(obj){return obj.Name});
-      let yData = biggestSets.map(function(obj){return obj.Pieces});
-      console.log("yData: ", yData);
+      let yData = biggestSets.map(function(obj){return parseInt(obj.Pieces)});
       let yDataMax = d3.max(yData);
       let yDataMin = d3.min(yData);
 

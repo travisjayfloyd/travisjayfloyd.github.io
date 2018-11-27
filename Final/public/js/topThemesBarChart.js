@@ -11,7 +11,7 @@ class TopThemesBarChart {
     //This function accepts a list of lego data set entries. (When the page first loads, it will get all the entries, otherwise it'll get whatever their brush selection or their year selection is). 
     update(legoEntries) {
       let topThemes = this.getTopThemes(legoEntries, 20);
-      console.log(topThemes);
+      // console.log(topThemes);
       let width = 500;
       let height = 260;
       let xPadding = 55;
