@@ -24,33 +24,7 @@ class TableChart {
       this.bar = {
         "height": 20
       };
-
-      // Set variables for commonly accessed data columns
-      // this.goalsMadeHeader = 'Goals Made';
-      // this.goalsConcededHeader = 'Goals Conceded';
-
-      // // Setup the scales 
-      // this.goalScale = d3.scaleLinear();
-      // this.barChartScale = d3.scaleLinear();
-      // this.colorScale = d3.scaleLinear()
-
-      // this.goalScaleWidth = 180;
-      // this.goalScaleHeight = 30;
-      // this.oldXRows = [];
   
-    }
-  
-  
-    /**
-     * Creates a table skeleton including headers that when clicked allow
-     * you to sort the table by the chosen attribute.
-     * Also calculates aggregate values of goals, wins, losses and total
-     * games as a function of country.
-     */
-    createTable() {
-  
-      
-      
     }
   
   
@@ -58,44 +32,7 @@ class TableChart {
      * Updates the table contents with a row for each element in the global
      * variable tableElements.
      */
-    update(year) {
-      console.log("in the table");
-      console.log(year);
-      console.log(this.legoData);
-
-    let fullarray = new Array();
-
-    if(year == null){
-        for(var i = 0; i < this.legoData.length; i++){
-            let obj = {};
-            obj['Name'] = this.legoData[i].Name;
-            obj['Theme'] = this.legoData[i].Theme;
-            obj['Subtheme'] = this.legoData[i].Subtheme;
-            obj['ReleaseYear'] = this.legoData[i].Year;
-            obj['Pieces'] = this.legoData[i].Pieces;
-            obj['Price'] = this.legoData[i].USD_MSRP;
-            fullarray.push(obj);
-        }
-    }
-    else{
-        for(var i = 0; i < this.legoData.length; i++){
-            if(this.legoData[i].Year == year){
-                let obj = {};
-                obj['Name'] = this.legoData[i].Name;
-                obj['Theme'] = this.legoData[i].Theme;
-                obj['Subtheme'] = this.legoData[i].Subtheme;
-                obj['ReleaseYear'] = this.legoData[i].Year;
-                obj['Pieces'] = this.legoData[i].Pieces;
-                obj['Price'] = this.legoData[i].USD_MSRP;
-                fullarray.push(obj);
-            }
-            else{
-                
-            }
-        }
-    }
-
-    console.log(fullarray);
+    update(fullarray) {
 
     // Create table rows
 
@@ -173,25 +110,5 @@ class TableChart {
     ;
   
     };
-  
-    /**
-     * Updates the global tableElements variable, with a row for each row
-     * to be rendered in the table.
-     */
-    updateList(i) {
-      // ******* TODO: PART IV *******
-      console.log(i);
-      // Only update list for aggregate clicks, not game clicks
-    }
-  
-    /**
-     * Collapses all expanded countries, leaving only rows for aggregate
-     * values per country.
-     */
-    collapseList() {
-      
-      // ******* TODO: PART IV *******
-  
-    }
   }
   
