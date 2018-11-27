@@ -82,7 +82,7 @@ class TableChart {
     d3.selectAll('.dataRow')
       .selectAll("th")
       .data(function(d) {
-        return [d.ReleaseYear];
+        return [d.Year];
       })
       .enter()
       .append("td")
@@ -102,7 +102,7 @@ class TableChart {
     d3.selectAll('.dataRow')
       .selectAll("th")
       .data(function(d) {
-        return [d.Price];
+        return [d.USD_MSRP];
       })
       .enter()
       .append("td")
