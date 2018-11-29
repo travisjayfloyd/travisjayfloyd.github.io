@@ -32,7 +32,7 @@ class TopThemesBarChart {
       // Create colorScale
       let colorScale = d3.scaleLinear()
       .domain([yDataMax, 0])
-      .range(["#b3cde0", "#03396c"]);
+      .range(["#FFF68F", "#CD950C"]);
 
       // Create the axes (hint: use #xAxisThemes and #yAxisThemes)
       let xAxisThemes = d3.axisBottom().scale(xScale);
