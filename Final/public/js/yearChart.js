@@ -35,12 +35,14 @@ class YearChart {
   updateYearSelStr(selectedYears){
     let yearStr = ""
       if(selectedYears.length == 0)
-        yearStr = "No Year Selected";
+        yearStr = "Every Year";
       else if(selectedYears.length == 1)
         yearStr = selectedYears[0]
       else 
         yearStr = Math.min(...selectedYears) + " - " + Math.max(...selectedYears)
-      document.getElementById("year-list").innerHTML = "Years Selected: " + yearStr;
+      document.getElementById("top-themes-title").innerHTML = "Top Themes for " + yearStr;
+      document.getElementById("biggest-sets-title").innerHTML = "Biggest Sets for " + yearStr;
+      document.getElementById("most-expensive-sets-title").innerHTML = "Most Expensive Sets for " + yearStr;
   }
 
   updateCharts(selectedYears) {
