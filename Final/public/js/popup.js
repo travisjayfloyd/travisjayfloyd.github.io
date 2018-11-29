@@ -47,6 +47,13 @@ class Popup {
       let cellHeight = 75;
       let previewInfo = [{type: "theme"}, {type: "set"}, {type: "set"}, {type: "theme"}, {type: "set"}, {type: "set"}, ];
 
+      let chooseColor = function(d, i) {
+        if(d.type === "theme") 
+          return "#D85650"; 
+        else 
+          return "#265783"
+      };
+
       let tileRects = popupSvg.selectAll("Rect")
       .data(previewInfo)
       .attr("x", (d, i) => {
@@ -58,12 +65,7 @@ class Popup {
       .attr("y", (d, i) => {
         if(i >= 3) return cellHeight; else 0;
       })
-      .attr("fill", (d)=>{
-        if(d.type === "theme") 
-          return "#8B3626"; 
-        else 
-          return "#03396c"
-      });
+      .attr("fill", chooseColor);
 
       tileRects.enter().append("rect")
       .attr("width", cellWidth)
@@ -78,12 +80,7 @@ class Popup {
         if(i >= 3) return cellHeight; else 0;
       })
       .attr("class", "tile")
-      .attr("fill", (d)=>{
-        if(d.type === "theme") 
-          return "#8B3626"; 
-        else 
-          return "#03396c"
-      })
+      .attr("fill", chooseColor)
 
       //Create the data for the popup
       //TODO need to get categories and quantities and make sure they don't go more than about 10 characters
@@ -178,7 +175,7 @@ class Popup {
   
     mousemove(d) {
       this.popup.style("top", (d3.event.pageY-100)+"px")
-        .style("left",(d3.event.pageX+10)+"px");
+        .style("left",(d3.event.pageX+20)+"px");
     }
   
     mouseout(d) {
