@@ -34,7 +34,7 @@ class MostExpensiveSetsBarChart {
       // Create colorScale
       let colorScale = d3.scaleLinear()
       .domain([yDataMax, yDataMin])
-      .range(["lightblue", "darkblue"]);
+      .range(["#b3cde0", "#03396c"]);
 
       // Create the axes (hint: use #xAxisMostExpensiveSets and #yAxisMostExpensiveSets)
       let xAxisMostExpensiveSets = d3.axisBottom().scale(xScale);

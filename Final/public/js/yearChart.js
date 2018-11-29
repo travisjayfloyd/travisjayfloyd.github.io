@@ -32,6 +32,30 @@ class YearChart {
     this.selected = null;
   }
 
+  updateYearSelStr(selectedYears){
+    let yearStr = ""
+      if(selectedYears.length == 0)
+        yearStr = "No Year Selected";
+      else if(selectedYears.length == 1)
+        yearStr = selectedYears[0]
+      else 
+        yearStr = Math.min(...selectedYears) + " - " + Math.max(...selectedYears)
+      document.getElementById("year-list").innerHTML = "Years Selected: " + yearStr;
+  }
+
+  updateCharts(selectedYears) {
+    console.log("update charts: ", selectedYears);
+    let yearSets = [];
+    selectedYears.forEach(year => {
+      this.legos.filter(legoset => legoset.Year == year).forEach(set=>yearSets.push(set));
+    });
+    console.log(yearSets);
+    this.topThemesChart.update(yearSets);
+    this.biggestSetsChart.update(yearSets);
+    this.mostExpensiveSetsChart.update(yearSets);
+    this.tablechart.update(yearSets);
+  }
+
   /**
    * Creates a chart with circles representing each election year, populates text content and other required elements for the Year Chart
    */
@@ -60,7 +84,8 @@ class YearChart {
 
     let brushed = function(){
       let selectedYears = [];
-      if(d3.event.selection != null){
+      console.log("in brush function");
+      if(d3.event.selection != null && !(d3.event.selection[0] == 0 && d3.event.selection[1] == 0)){
         let lowBound = d3.event.selection[0];
         let highBound = d3.event.selection[1];
         let circles = d3.select("#year-chart").select("svg").selectAll("circle");
@@ -74,28 +99,20 @@ class YearChart {
         indices.forEach(function(index){
           selectedYears.push(1971 + index);
         });
+        ctx.updateYearSelStr(selectedYears);
+        ctx.updateCharts(selectedYears);
       }
-      let yearStr = ""
-      if(selectedYears.length == 0)
-        yearStr = "No Year Selected";
-      else if(selectedYears.length == 1)
-        yearStr = selectedYears[0]
-      else 
-        yearStr = Math.min(...selectedYears) + " - " + Math.max(...selectedYears)
-      document.getElementById("year-list").innerHTML = "Years Selected: " + yearStr;
-      
-      let yearSets = [];
-      selectedYears.forEach(year => {
-        ctx.legos.filter(legoset => legoset.Year == year).forEach(set=>yearSets.push(set));
-      });
-      console.log(yearSets);
-      ctx.topThemesChart.update(yearSets);
-      ctx.biggestSetsChart.update(yearSets);
-      ctx.mostExpensiveSetsChart.update(yearSets);
-      ctx.tablechart.update(yearSets);
     }
-    let brush = d3.brushX().extent([[0, 0], [ctx.svgWidth, ctx.svgHeight]]).on("end", brushed);
+    let brush = d3.brushX().extent([[0, 0], [ctx.svgWidth, ctx.svgHeight]])
+    .on("end", brushed);
 
+    let popup = new Popup(this.legos);
+    
+    let mouseMove = function(d){
+      popup.mousemove(d)
+    };
+    
+    this.svg.attr("class", "brush").call(brush);
     
     // Create the chart by adding circle elements representing each election year
     this.svg.append('line')
@@ -125,35 +142,37 @@ class YearChart {
         .data(setsperyear)
         .attr("r", d => Math.log(d) *3)
         .data(years)
-      //   .on('mouseover', function(d,i){
-      //     d3.select(this)
-      //     .transition()
-      //     .style("stroke", "black")
-      //     .style("stroke-width", "3");
-      //   })
-      // .on('mouseout', function(d,i){
-      //   d3.select(this)
-      //   .transition()
-      //   .style("stroke", "")
-      //   .style("stroke-width", "0");
-      // })
-      // .on('click', function(d, i) {
-        
-      //   ctx.tablechart.update(d);
-      //   let yearSets = ctx.legos.filter(legoset => legoset.Year == d);
-      //   ctx.topThemesChart.update(yearSets);
-      //   ctx.biggestSetsChart.update(yearSets);
-      //   ctx.mostExpensiveSetsChart.update(yearSets);
-        
-      //   d3.select(this)
-      //   .transition()
-      //   .style("stroke", "black")
-      //   .style("stroke-width", "3");
-        
-      // })
-      // ;
-      this.svg.attr("class", "brush").call(brush);
-      
+        .on("mousemove", mouseMove)
+        .on('mouseover', function(d,i){
+          d3.select(this)
+          .transition()
+          .style("stroke", "black")
+          .style("stroke-width", "3");
+          popup.mouseover(d);
+        })
+        .on('mouseout', function(d,i){
+          d3.select(this)
+          .transition()
+          .style("stroke", "")
+          .style("stroke-width", "0");
+          popup.mouseout(d)
+        })
+        .on('click', function(d, i) {
+          
+          ctx.updateYearSelStr([d]);
+          ctx.updateCharts([d]);
+          
+          d3.select(this)
+            .transition()
+            .style("stroke", "black")
+            .style("stroke-width", "3");
+          d3.select("rect.selection")
+            .attr("width", 0);
+          
+        })
+        .attr("pointer-events", "all")
+        ;
+        d3.select(".brush").call(brush.move, [[0], [0]], [[0], [0]]);
     }
     
 }

@@ -1,15 +1,18 @@
 class Popup {
 
-    constructor() {
+    constructor(legos) {
       //----------------------------------------
       // popup
       //----------------------------------------
+      this.legos = legos;
       this.popup = d3.select("body")
         .append("div")
         .style("position", "absolute")
         .style("z-index", "10")
         .style("visibility", "hidden")
         .style("background", "#565656")
+        .style("border-radius", "20px")
+        .style("font-size", "12px")
         .attr('id', 'popup')
         .classed('popupDiv', true)
       ;
@@ -19,9 +22,13 @@ class Popup {
      * Gets the HTML content for a popup.
      */
     popup_html(d) {
-      let text = "<h2>" + d.name + "</h2>";
-      console.log(d);
-    //   text +=  "Electoral Votes: " + d.Total_EV;
+      let yearSets = [];
+      this.legos.filter(legoset => legoset.Year == d).forEach(set=> yearSets.push(set));
+      console.log(yearSets);
+      let text = "";
+      yearSets.forEach(yearSet => text += "<h2>" + yearSet.Name + "</h2>");
+      
+      //   text +=  "Electoral Votes: " + d.Total_EV;
     //   text += "<ul>"
     //   // Democrat
     //   text += "<li class = democrat>" +

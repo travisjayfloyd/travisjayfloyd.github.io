@@ -71,7 +71,8 @@ h1 {
 }
 
 .brush .selection {
-    fill-opacity: .5;
+    fill-opacity: .4;
+    fill: #03396c;
 }
 
 .selected{
