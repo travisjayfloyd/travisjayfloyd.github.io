@@ -20,16 +20,11 @@ h1 {
     stroke-width: 4;
 }
 
-.tilestext{
+
+.categorytext, .quantitytext, .headertext{
     text-anchor:middle;
     font-size: 12px;
-    fill: #F5F5DC;
-    stroke-width: 0.1px;
-}
-
-.categorytext, .quantitytext {
-    font-size: 12px;
-    fill: #F5F5DC;
+    fill: #f2f3f4;
     stroke-width: 0.1px;
 }
 

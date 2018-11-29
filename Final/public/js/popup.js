@@ -10,7 +10,7 @@ class Popup {
         .style("position", "absolute")
         .style("z-index", "10")
         .style("visibility", "hidden")
-        .style("background", "#F5F5DC")
+        .style("background", "#f2f3f4")
         .style("border-radius", "20px")
         .style("font-size", "12px")
         .attr('id', 'popup')
@@ -38,12 +38,12 @@ class Popup {
         .html(this.popup_html(d))
         .classed('popup-title', true)
       ;
-      let svgWidth = 320;
+      let svgWidth = 380;
       let svgHeight = 150;
       let popupSvg = this.popup.append("svg")
       .attr("width", svgWidth)
       .attr("height", svgHeight);
-      let cellWidth = 100;
+      let cellWidth = 120;
       let cellHeight = 75;
       let previewInfo = [{type: "theme"}, {type: "set"}, {type: "set"}, {type: "theme"}, {type: "set"}, {type: "set"}, ];
 
@@ -97,47 +97,45 @@ class Popup {
       ];
       
       let spacer = 15;
+      let xSpacer = 15;
+      
+      let getX = function(d, i) {
+        let x = 0;
+        if(i >= 3) 
+          x = ((i - 3) * cellWidth + cellWidth/2)
+        else 
+          x = (i * cellWidth + cellWidth/2)
+        if(i == 0 || i == 3) x += xSpacer / 3;
+        else if(i == 2 || i == 5) x += xSpacer;
+        else if(i == 1 || i == 4) x += xSpacer * 2 / 3;
+        return x;
+      }
 
       //Display the preview header for each tile
       
-      let previewTexts = popupSvg.selectAll("text.tilestext")
+      let headertexts = popupSvg.selectAll("text.headertext")
       .data(popupData)
       .text(d => (d.previewHeader))
-      .attr('dx', (d, i) => {
-        if(i >= 3) 
-          return ((i - 3) * (cellWidth + 5) + 55)
-        else 
-          return (i * (cellWidth + 5) + 55)
-      })
+      .attr('dx', getX)
       .attr('dy', (d, i) => {
         if(i >= 3) return cellHeight + 25; else return 25;
       })
-      .attr('class', 'tilestext');
+      .attr('class', 'headertext');
       
-      previewTexts.enter().append("text")
+      headertexts.enter().append("text")
       .text(d => (d.previewHeader))
-      .attr('dx', (d, i) => {
-        if(i >= 3) 
-          return ((i - 3) * (cellWidth + 5) + 55)
-        else 
-          return (i * (cellWidth + 5) + 55)
-      })
+      .attr('dx', getX)
       .attr('dy', (d, i) => {
         if(i >= 3) return cellHeight + 25; else return 25;
       })
-      .attr('class', 'tilestext');
+      .attr('class', 'headertext');
 
       //Display the preview category for each tile
       
       let categoryTexts = popupSvg.selectAll("text.categorytext")
       .data(popupData)
       .text(d => (d.category))
-      .attr('dx', (d, i) => {
-        if(i >= 3) 
-          return ((i - 3) * (cellWidth + 5) + 20)
-        else 
-          return (i * (cellWidth + 5) + 20)
-      })
+      .attr('dx', getX)
       .attr('dy', (d, i) => {
         if(i >= 3) return cellHeight + 25 + spacer; else return 25 + spacer;
       })
@@ -145,12 +143,7 @@ class Popup {
       
       categoryTexts.enter().append("text")
       .text(d => (d.category))
-      .attr('dx', (d, i) => {
-        if(i >= 3) 
-          return ((i - 3) * (cellWidth + 5) + 20)
-        else 
-          return (i * (cellWidth + 5) + 20)
-      })
+      .attr('dx', getX)
       .attr('dy', (d, i) => {
         if(i >= 3) return cellHeight + 25 + spacer; else return 25 + spacer;
       })
@@ -161,12 +154,7 @@ class Popup {
       let quantityTexts = popupSvg.selectAll("text.quantitytext")
       .data(popupData)
       .text(d => (d.quantity))
-      .attr('dx', (d, i) => {
-        if(i >= 3) 
-          return ((i - 3) * (cellWidth + 5) + 20)
-        else 
-          return (i * (cellWidth + 5) + 20)
-      })
+      .attr('dx', getX)
       .attr('dy', (d, i) => {
         if(i >= 3) return cellHeight + 25 + 2*spacer; else return 25 + 2*spacer;
       })
@@ -174,18 +162,13 @@ class Popup {
       
       quantityTexts.enter().append("text")
       .text(d => (d.quantity))
-      .attr('dx', (d, i) => {
-        if(i >= 3) 
-          return ((i - 3) * (cellWidth + 5) + 20)
-        else 
-          return (i * (cellWidth + 5) + 20)
-      })
+      .attr('dx', getX)
       .attr('dy', (d, i) => {
         if(i >= 3) return cellHeight + 25 + 2*spacer; else return 25 + 2*spacer;
       })
       .attr('class', 'quantitytext');
 
-      previewTexts.exit().remove();
+      headertexts.exit().remove();
       quantityTexts.exit().remove();
       categoryTexts.exit().remove();
 
