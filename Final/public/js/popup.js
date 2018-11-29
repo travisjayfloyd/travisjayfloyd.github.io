@@ -22,29 +22,12 @@ class Popup {
      * Gets the HTML content for a popup.
      */
     popup_html(d) {
+      //TODO also need to make the popup for the table since this stuff is all just for the year chart
       let yearSets = [];
       // this.legos.filter(legoset => legoset.Year == d).forEach(set=> yearSets.push(set));
       console.log(yearSets);
       let text = "<div class='year-popup'>"
       text += "<h2>" + d + "</h2>";
-      // text += 
-      
-      // yearSets.forEach(yearSet => text += "<h2>" + yearSet.Name + "</h2>");
-      
-      //   text +=  "Electoral Votes: " + d.Total_EV;
-    //   text += "<ul>"
-    //   // Democrat
-    //   text += "<li class = democrat>" +
-    //     d.D_Nominee_prop+":\t\t"+d.D_Votes+"("+d.D_Percentage+"%)" + "</li>"
-    //   // Republican
-    //   text += "<li class = republican>" +
-    //     d.R_Nominee_prop+":\t\t"+d.R_Votes+"("+d.R_Percentage+"%)" + "</li>"
-    //   // Independent
-    //   if (d.I_Percentage) {
-    //     text += "<li class = independent>" +
-    //       d.I_Nominee_prop+":\t\t"+d.I_Votes+"("+d.I_Percentage+"%)" + "</li>"
-    //   }
-    //   text += "</ul>";
   
       text += "</div>"
       return text;
