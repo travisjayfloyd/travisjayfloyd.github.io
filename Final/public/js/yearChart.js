@@ -62,6 +62,7 @@ class YearChart {
    * Creates a chart with circles representing each election year, populates text content and other required elements for the Year Chart
    */
   update (data) {
+
     let ctx = this;
 
     let years = new Array();
@@ -115,6 +116,10 @@ class YearChart {
     };
     
     this.svg.attr("class", "brush").call(brush);
+
+    let colorScale = d3.scaleLinear()
+      .domain([220, 0])
+      .range(["#FF6666", "#8B3626"]);
     
     // Create the chart by adding circle elements representing each election year
     this.svg.append('line')
@@ -129,14 +134,11 @@ class YearChart {
         .data(data)
         .enter()
         .append('circle')
-        .style("fill" , function(d) {
-          var letters = '0123456789ABCDEF';
-          var color = '#';
-          for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-          }
-          return color;
-        })
+        .data(setsperyear)
+        .style("fill", d => colorScale(d))
+        .style("stroke", "black")
+        .style("stroke-width", "1")
+        .data(data)
         .attr("cx", function(d,i) {
           return (width / 45  ) * i + 10;
         })
@@ -155,8 +157,8 @@ class YearChart {
         .on('mouseout', function(d,i){
           d3.select(this)
           .transition()
-          .style("stroke", "")
-          .style("stroke-width", "0");
+          .style("stroke", "black")
+          .style("stroke-width", "1");
           popup.mouseout(d)
         })
         .on('click', function(d, i) {

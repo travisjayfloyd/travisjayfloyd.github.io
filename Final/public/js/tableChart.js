@@ -33,7 +33,88 @@ class TableChart {
      * variable tableElements.
      */
     update(fullarray) {
+      console.log(fullarray);
 
+      let legos = new Array();
+      for(var i = 0; i < fullarray.length; i++){
+        let obj = {}
+        obj['Name'] = fullarray[i].Name;
+        obj['Subtheme'] = fullarray[i].Subtheme;
+        obj['Release_Year'] = parseInt(fullarray[i].Year, 10);
+        obj['Pieces'] = parseInt(fullarray[i].Pieces, 10);
+        obj['Price'] = Number(fullarray[i].USD_MSRP);
+        legos.push(obj);
+      }
+
+
+    //********* - START TABLE - *********
+    var sortAscending = true;
+    var table = d3.select('#legoTable').append('table');
+    var titles = d3.keys(legos[0]);
+    var titles = ["Name", "Subtheme", "Release_Year", "Pieces", "Price"]
+    var headers = table.append('thead').append('tr')
+      .selectAll('th')
+      .data(titles).enter()
+      .append('th')
+      .text(function(d) {
+        return d
+      })
+      .on('click', function(d) {
+        headers.attr('class', 'header');
+        if (d == "Name" || d == "Subtheme") { //these keys sort alphabetically
+          if (sortAscending) {
+            rows.sort(function(a, b) {
+              return d3.ascending(a[d], b[d]);
+            });
+            sortAscending = false;
+            this.className = 'aes';
+          } else {
+            rows.sort(function(a, b) {
+              return d3.descending(a[d], b[d]);
+            });
+            sortAscending = true;
+            this.className = 'des';
+          }
+        } else {
+          if (sortAscending) {
+            rows.sort(function(a, b) {
+              return b[d] - a[d];
+            });
+            sortAscending = false;
+            this.className = 'aes';
+          } else {
+            rows.sort(function(a, b) {
+              return a[d] - b[d];
+            });
+            sortAscending = true;
+            this.className = 'des';
+          }
+        }
+      });
+
+    let rows = table.append('tbody').selectAll('tr')
+      .data(legos).enter()
+      .append('tr');
+    rows.selectAll('td')
+      .data(function(d) {
+        return titles.map(function(key, i) {
+          return {
+            'value': d[key],
+            'name': d
+          };
+        });
+      }).enter()
+      .append('td')
+      .attr('data-th', function(d) {
+        return d.Name;
+      })
+      .text(function(d) {
+          return d.value
+      });
+
+
+      
+    /*
     // Create table rows
 
     let rows = d3.select("#legoTable").select("tbody").selectAll("tr")
@@ -110,5 +191,7 @@ class TableChart {
     ;
   
     };
+    */
   }
+}
   
