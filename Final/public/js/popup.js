@@ -174,8 +174,19 @@ class Popup {
     }
   
     mousemove(d) {
-      this.popup.style("top", (d3.event.pageY-100)+"px")
-        .style("left",(d3.event.pageX+20)+"px");
+      let top = 0;
+      let left = 0;
+      console.log("window inner width: ", window.innerWidth);
+      console.log("d3.event.pageX: ", d3.event.pageX);
+      if(d3.event.pageX < window.innerWidth - 400) {
+        top = (d3.event.pageY-220);
+        left = (d3.event.pageX+20);
+      } else {
+        top = (d3.event.pageY-220);
+        left = (d3.event.pageX-400);
+      }
+      this.popup.style("top", top + "px")
+                .style("left", left + "px");
     }
   
     mouseout(d) {
