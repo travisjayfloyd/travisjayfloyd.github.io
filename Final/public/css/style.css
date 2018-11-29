@@ -20,7 +20,20 @@ h1 {
     stroke-width: 4;
 }
 
-.yeartext, .tilestext, .brushtext{
+.tilestext{
+    text-anchor:middle;
+    font-size: 12px;
+    fill: #F5F5DC;
+    stroke-width: 0.1px;
+}
+
+.categorytext, .quantitytext {
+    font-size: 12px;
+    fill: #F5F5DC;
+    stroke-width: 0.1px;
+}
+
+.yeartext, .brushtext{
     text-anchor:middle;
     font-size: 24px;
     fill: #565656;
@@ -98,10 +111,14 @@ h2{
     border-radius: 10px;
     pointer-events: none;
 }
-.tooltip-title{
+.popup-title{
     font-size:18px;
     font-family: "Arial Black";
 
+}
+
+.year-popup{
+    padding: 5px;
 }
 
 .tooltipDiv {

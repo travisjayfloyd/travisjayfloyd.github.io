@@ -35,7 +35,7 @@ class YearChart {
   updateYearSelStr(selectedYears){
     let yearStr = ""
       if(selectedYears.length == 0)
-        yearStr = "Every Year";
+        yearStr = "of All Time";
       else if(selectedYears.length == 1)
         yearStr = selectedYears[0]
       else 
