@@ -5,12 +5,13 @@ class TopThemesBarChart {
      */
     constructor(data) {
       this.legoData = data;
+      this.lego = new Lego(data);
   
     }
 
     //This function accepts a list of lego data set entries. (When the page first loads, it will get all the entries, otherwise it'll get whatever their brush selection or their year selection is). 
     update(legoEntries) {
-      let topThemes = this.getTopThemes(legoEntries, 20);
+      let topThemes = this.lego.getTopThemes(legoEntries, 20);
       // console.log(topThemes);
       let width = 500;
       let height = 260;
@@ -53,6 +54,8 @@ class TopThemesBarChart {
         let bars = d3.select("#topThemesBars")
         let rects = bars.selectAll("rect").data(topThemes);
         rects
+          .transition()
+          .duration(500)
           .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
           .attr("x", d => xScale(d.Theme))
           .attr("y", d => yScale(d.sum))
@@ -71,27 +74,5 @@ class TopThemesBarChart {
 
         
     }
-
-    getTopThemes(legoEntries, howMany) {
-      let sumThemes = [];
-      legoEntries.reduce(function(groupTheme, legoEntry) {
-        if (!groupTheme[legoEntry.Theme]) {
-            groupTheme[legoEntry.Theme] = {
-                sum: 0,
-                Theme: legoEntry.Theme
-            };
-            sumThemes.push(groupTheme[legoEntry.Theme])
-        }
-        groupTheme[legoEntry.Theme].sum += 1
-        return groupTheme;
-      }, {});
-      
-      sumThemes.sort(function(a, b) {
-        return parseInt(b.sum) - parseInt(a.sum);
-      });
-      
-      return sumThemes.slice(0, howMany);
-    }
-
   }
   

@@ -21,21 +21,21 @@ class Popup {
     /**
      * Gets the HTML content for a popup.
      */
-    popup_html(d) {
+    popup_html(year) {
       //TODO also need to make the popup for the table since this stuff is all just for the year chart
       let yearSets = [];
       // this.legos.filter(legoset => legoset.Year == d).forEach(set=> yearSets.push(set));
       console.log(yearSets);
       let text = "<div class='year-popup'>"
-      text += "<h2>" + d + "</h2>";
+      text += "<h2>" + year + "</h2>";
   
       text += "</div>"
       return text;
     }
   
-    mouseover(d) {
+    mouseover(year) {
       this.popup
-        .html(this.popup_html(d))
+        .html(this.popup_html(year))
         .classed('popup-title', true)
       ;
       let svgWidth = 380;
@@ -83,14 +83,28 @@ class Popup {
       .attr("fill", chooseColor)
 
       //Create the data for the popup
-      //TODO need to get categories and quantities and make sure they don't go more than about 10 characters
+
+      let shorterLegoEntry = function(set){
+        let textLength = 14;
+        if(set.Name && set.Name.length > textLength) set.Name = set.Name.substring(0, textLength) + "...";
+        if(set.Theme && set.Theme.length > textLength) set.Theme = set.Theme.substring(0, textLength) + "...";
+        return set;
+      };
+
+      let topTheme = shorterLegoEntry(this.lego.getTopTheme(year));
+      let smallTheme = shorterLegoEntry(this.lego.getSmallestTheme(year));
+      let biggestSet = shorterLegoEntry(this.lego.getBiggestSet(year));
+      let mostExpensiveSet = shorterLegoEntry(this.lego.getMostExpensiveSet(year));
+      let smallestSet = shorterLegoEntry(this.lego.getSmallestSet(year));
+      let leastExpensiveSet = shorterLegoEntry(this.lego.getLeastExpensiveSet(year));
+
       let popupData = [
-        {previewHeader: "Top Theme", category: "Town", quantity: "30 sets"},
-        {previewHeader: "Biggest Set", category: "Town", quantity: "30 pieces"},
-        {previewHeader: "Most $$ Set", category: "Town", quantity: "$30"},
-        {previewHeader: "Lowest Theme", category: "Town", quantity: "30 sets"},
-        {previewHeader: "Smallest Set", category: "Town", quantity: "30 pieces"},
-        {previewHeader: "Least $$ Set", category: "Town", quantity: "$30"},
+        {previewHeader: "Top Theme", category: topTheme.Theme, quantity: topTheme.sum + " sets"},
+        {previewHeader: "Biggest Set", category: biggestSet.Name, quantity: biggestSet.Pieces + " pieces"},
+        {previewHeader: "Most $$ Set", category: mostExpensiveSet.Name, quantity: mostExpensiveSet.Pieces + " pieces"},
+        {previewHeader: "Lowest Theme", category: smallTheme.Theme, quantity: smallTheme.sum + " sets"},
+        {previewHeader: "Smallest Set", category: smallestSet.Name, quantity: smallestSet.Pieces + " pieces"},
+        {previewHeader: "Least $$ Set", category: leastExpensiveSet.Name, quantity: leastExpensiveSet.Pieces + " pieces"},
       ];
       
       let spacer = 15;
@@ -176,8 +190,6 @@ class Popup {
     mousemove(d) {
       let top = 0;
       let left = 0;
-      console.log("window inner width: ", window.innerWidth);
-      console.log("d3.event.pageX: ", d3.event.pageX);
       if(d3.event.pageX < window.innerWidth - 400) {
         top = (d3.event.pageY-220);
         left = (d3.event.pageX+20);

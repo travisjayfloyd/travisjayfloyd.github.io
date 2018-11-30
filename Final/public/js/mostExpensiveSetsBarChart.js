@@ -5,12 +5,13 @@ class MostExpensiveSetsBarChart {
      */
     constructor(data) {
       this.legoData = data;
+      this.lego = new Lego(data);
   
     }
 
     //This function accepts a list of set objects
     update(sets) {
-      let mostExpensiveSets = this.getMostExpensiveSets(sets, 25);
+      let mostExpensiveSets = this.lego.getMostExpensiveSets(sets, 25);
     //   console.log("most expensive sets: ", mostExpensiveSets);
       let width = 500;
       let height = 260;
@@ -55,6 +56,8 @@ class MostExpensiveSetsBarChart {
         let bars = d3.select("#mostExpensiveSetsBars")
         let rects = bars.selectAll("rect").data(mostExpensiveSets);
         rects
+          .transition()
+          .duration(500)
           .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
           .attr("x", d => xScale(d.Name))
           .attr("y", d => yScale(d.USD_MSRP))
@@ -72,14 +75,6 @@ class MostExpensiveSetsBarChart {
           rects.exit().remove();
 
         
-    }
-
-    getMostExpensiveSets(sets, howMany) {
-      let mostExpensiveSets = sets.filter(set=>set.USD_MSRP != "NA");
-      mostExpensiveSets.sort(function(a, b) {
-        return parseInt(b.USD_MSRP) - parseInt(a.USD_MSRP);
-      });
-      return mostExpensiveSets.slice(0, howMany);
     }
 
   }

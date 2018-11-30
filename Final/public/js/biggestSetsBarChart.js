@@ -5,12 +5,13 @@ class BiggestSetsBarChart {
      */
     constructor(data) {
       this.legoData = data;
+      this.lego = new Lego(data);
   
     }
 
     //This function accepts a list of set objects
     update(sets) {
-      let biggestSets = this.getBiggestSets(sets, 20);
+      let biggestSets = this.lego.getBiggestSets(sets, 20);
       let width = 500;
       let height = 260;
       let xPadding = 55;
@@ -53,6 +54,8 @@ class BiggestSetsBarChart {
         let bars = d3.select("#biggestSetsBars")
         let rects = bars.selectAll("rect").data(biggestSets);
         rects
+          .transition()
+          .duration(500)
           .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
           .attr("x", d => xScale(d.Name))
           .attr("y", d => yScale(d.Pieces))
