@@ -3,15 +3,23 @@ class TopThemesBarChart {
     /**
      * Creates a Table Object
      */
-    constructor(data) {
+    constructor(data, tableChart, mostExpensiveSetsBarChart, biggestSetsBarChart) {
       this.legoData = data;
+      this.tableChart = tableChart;
+      this.mostExpensiveSetsBarChart = mostExpensiveSetsBarChart;
+      this.biggestSetsBarChart = biggestSetsBarChart;
       this.lego = new Lego(data);
   
     }
 
     //This function accepts a list of lego data set entries. (When the page first loads, it will get all the entries, otherwise it'll get whatever their brush selection or their year selection is). 
-    update(legoEntries) {
+    update(legoEntries, selected) {
+      let ctx = this;
       let topThemes = this.lego.getTopThemes(legoEntries, 20);
+      // let tableChart = new TableChart();
+      // let mostExpensiveSetsBarChart = new MostExpensiveSetsBarChart();
+      // let biggestSetsBarChart = new BiggestSetsBarChart();
+      // console.log(topThemes);
       let width = 500;
       let height = 260;
       let xPadding = 55;
@@ -61,9 +69,34 @@ class TopThemesBarChart {
         .attr("y", d => yScale(d.sum))
         .attr("height", d => {return height - yScale(d.sum)})
         .attr("width", xScale.bandwidth())
-        .style("fill", d => colorScale(d.sum));
+        //.style("fill", d => colorScale(d.sum));
+        .style("fill", function(d){
+          if(selected != null){
+            if(d.Theme != selected.name.Theme){
+             return colorScale(d.sum);
+            }
+            else{
+              return "#b3cde0";
+            }
+          }
+          else{
+            return colorScale(d.sum);
+          }
+        });
+        
       rects
       .on("click", (d)=>themePopup.click(d))
+      .on('mouseover', function(d,i){
+        d3.select(this)
+        .style("fill", "#b3cde0");
+        ctx.tableChart.update(legoEntries, d);
+        ctx.mostExpensiveSetsBarChart.update(legoEntries);
+        ctx.biggestSetsBarChart.update(legoEntries);
+      })
+      .on('mouseout', function(d,i){
+        d3.select(this)
+        .style("fill", d => colorScale(d.sum));
+      });
       // .on("mousemove", (d)=>themePopup.mousemove(d))
       // .on("mouseover", (d)=>themePopup.mouseover(d))
       // .on("mouseout", (d)=>themePopup.mouseout(d));
@@ -74,7 +107,20 @@ class TopThemesBarChart {
         .attr("height", function(d) {return height - yScale(d.sum)})
         .attr("x", d => xScale(d.Theme))
         .attr("y", d => yScale(d.sum))
-        .style("fill", d => colorScale(d.sum));
+        //.style("fill", d => colorScale(d.sum));
+        .style("fill", function(d){
+          if(selected != null){
+            if(d.Theme != selected.name.Theme){
+             return colorScale(d.sum);
+            }
+            else{
+              return "#b3cde0";
+            }
+          }
+          else{
+            return colorScale(d.sum);
+          }
+        });
       rects
       .on("click", (d)=>themePopup.click(d))
       // .on("mousemove", (d)=>themePopup.mousemove(d))

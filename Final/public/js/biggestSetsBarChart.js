@@ -10,7 +10,7 @@ class BiggestSetsBarChart {
     }
 
     //This function accepts a list of set objects
-    update(sets) {
+    update(sets, selected) {
       let biggestSets = this.lego.getBiggestSets(sets, 20);
       let width = 500;
       let height = 260;
@@ -61,7 +61,20 @@ class BiggestSetsBarChart {
           .attr("y", d => yScale(d.Pieces))
           .attr("height", d => {return height - yScale(d.Pieces)})
           .attr("width", xScale.bandwidth())
-          .style("fill", d => colorScale(d.Pieces))
+          //.style("fill", d => colorScale(d.Pieces))
+          .style("fill", function(d){
+            if(selected != null){
+              if(d.Name != selected.name.Name){
+               return colorScale(d.Pieces);
+              }
+              else{
+                return "FF6666";
+              }
+            }
+            else{
+              return colorScale(d.Pieces);
+            }
+          });
     
         rects.enter().append("rect")
           .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
@@ -69,7 +82,32 @@ class BiggestSetsBarChart {
           .attr("height", function(d) {return height - yScale(d.Pieces)})
           .attr("x", d => xScale(d.Name))
           .attr("y", d => yScale(d.Pieces))
-          .style("fill", d => colorScale(d.Pieces))
+          //.style("fill", d => colorScale(d.Pieces))
+          .style("fill", function(d){
+            if(selected != null){
+              if(d.Name != selected.name.Name){
+               return colorScale(d.Pieces);
+              }
+              else{
+                return "FF6666";
+              }
+            }
+            else{
+              return colorScale(d.Pieces);
+            }
+          });
+
+          rects
+            .on('mouseover', function(d,i){
+              d3.select(this)
+              .style("fill", "#FF6666");
+              
+            })
+            .on('mouseout', function(d,i){
+              d3.select(this)
+              .style("fill", d => colorScale(d.Pieces));
+            });
+
           rects.exit().remove();
 
         

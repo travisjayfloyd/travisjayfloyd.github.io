@@ -4,9 +4,11 @@ class TableChart {
     /**
      * Creates a Table Object
      */
-    constructor(data) {
+    constructor(data, mostExpensiveSetsBarChart, biggestSetsBarChart) {
       let ctx = this;
       this.legoData = data;
+      this.mostExpensiveSetsBarChart = mostExpensiveSetsBarChart;
+      this.biggestSetsBarChart = biggestSetsBarChart;
       this.prevHeader = {className:""};
       // Default values for the Table Headers
       this.sortAscending = true;
@@ -59,12 +61,16 @@ class TableChart {
           ctx.prevHeader = this;
         });
 
-        let shortData = this.legoData.slice(0, 150);
+        let shortData = ctx.legoData.slice(0, 150);
         shortData.push({"Name":"See More Entries By Selecting Years At Top"})
 
         this.update(shortData);
 
         // this.table.style("visibility", "hidden");
+    }
+
+    addTopThemesChart(topThemesBarChart) {
+      this.topThemesBarChart = topThemesBarChart;
     }
   
   
@@ -72,9 +78,12 @@ class TableChart {
      * Updates the table contents with a row for each element in the global
      * variable tableElements.
      */
-    update(fullarray) {
+    update(fullarray, selected) {
       let ctx = this;
-      this.table.style("visibility", "visible");
+      this.table.style("visibility", "visible").attr("width", "1000px");
+      // let mostExpensiveSetsBarChart = new MostExpensiveSetsBarChart();
+      // let biggestSetsBarChart = new BiggestSetsBarChart();
+      // let topThemesBarChart = new TopThemesBarChart();
 
       let legos = new Array();
       for(var i = 0; i < fullarray.length; i++){
@@ -97,7 +106,9 @@ class TableChart {
 
     rows.exit().remove();
 
-    enterRows.append("tr").attr('class', 'dataRow');
+    enterRows.append("tr")
+      .style("background-color", "#FFE330")
+      .attr('class', 'dataRow');
     d3.selectAll('.dataRow').html("");
 
     d3.selectAll('.dataRow')
@@ -120,8 +131,33 @@ class TableChart {
       }
         
       return d.value
+    })
+    .style("text-align", "center")
+    .style("background-color", "#b3cde0")
+    /*.style("backgroud-color", function(d){
+      if(selected == null){
+        return "#b3cde0";
+      }
+      else{
+        if(d.name.Theme != selected.Theme){
+          return "#b3cde0";
+        }
+        else{
+          return "#FF6666";
+        }
+      }
+    })*/
+    .on('mouseover', function(d,i){
+      d3.select(this)
+      .style("background-color", "#FF6666");
+      ctx.mostExpensiveSetsBarChart.update(fullarray, d);
+      ctx.biggestSetsBarChart.update(fullarray, d);
+      ctx.topThemesBarChart.update(fullarray, d);
+    })
+    .on('mouseout', function(d,i){
+      d3.select(this)
+      .style("background-color", "#b3cde0");
     });
-  ;
   }
 }
 

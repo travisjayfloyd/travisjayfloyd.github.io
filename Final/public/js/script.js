@@ -3,9 +3,6 @@ d3.csv("data/legosets.csv").then(function(legoSets) {
     legoSets.forEach(function (d){
       d.Year = Number(d.Year);
     })
-    let table = new TableChart(legoSets);
-    let topThemesBarChart = new TopThemesBarChart(legoSets);
-    topThemesBarChart.update(legoSets);
     let biggestSetsBarChart = new BiggestSetsBarChart(legoSets);
     biggestSetsBarChart.update(legoSets);
     let mostExpensiveSetsBarChart = new MostExpensiveSetsBarChart(legoSets);
@@ -14,6 +11,10 @@ d3.csv("data/legosets.csv").then(function(legoSets) {
     // priceVTimeChart.update(years);
     let sizeVTimeChart = new SetsOverTimeChart(legoSets, "Pieces");
     // sizeVTimeChart.update(years);
+    let table = new TableChart(legoSets, mostExpensiveSetsBarChart, biggestSetsBarChart);
+    let topThemesBarChart = new TopThemesBarChart(legoSets, table, mostExpensiveSetsBarChart, biggestSetsBarChart);
+    topThemesBarChart.update(legoSets);
+    table.addTopThemesChart(topThemesBarChart);
     let yearChart = new YearChart(legoSets, table, topThemesBarChart, biggestSetsBarChart, mostExpensiveSetsBarChart, priceVTimeChart, sizeVTimeChart);
     yearChart.update(legoSets);
 });
