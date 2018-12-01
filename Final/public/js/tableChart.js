@@ -7,7 +7,6 @@ class TableChart {
     constructor(data) {
       let ctx = this;
       this.legoData = data;
-      console.log("initial data: ", data);
       this.prevHeader = {className:""};
       // Default values for the Table Headers
       this.sortAscending = true;
@@ -60,7 +59,12 @@ class TableChart {
           ctx.prevHeader = this;
         });
 
-        this.table.style("visibility", "hidden");
+        let shortData = this.legoData.slice(0, 150);
+        shortData.push({"Name":"See More Entries By Selecting Years At Top"})
+
+        this.update(shortData);
+
+        // this.table.style("visibility", "hidden");
     }
   
   
@@ -110,107 +114,14 @@ class TableChart {
     })
     .enter()
     .append("td")
-    .text(d => d.value);
-    // .html(d => d)
+    .text(d => {
+      if(d.value == NaN) {
+        d.value = "";
+      }
+        
+      return d.value
+    });
   ;
-///////////////////////////////////////////////////////////////////////////////////////     
-    // rows.selectAll('td')
-    //   .data(function(d) {
-    //     return titles.map(function(key, i) {
-    //       return {
-    //         'value': d[key],
-    //         'name': d
-    //       };
-    //     });
-    //   })
-    //   .enter()
-    //   .append('td')
-    //   .attr('data-th', function(d) {
-    //     return d.Name;
-    //   })
-    //   .text(function(d) {
-    //       return d.value
-    //   });
-
-
-    /*
-    
-    // Create table rows
-
-    let rows = d3.select("#legoTable").select("tbody").selectAll("tr")
-      .data(legos);
-
-    let enterSet = rows.enter();
-    let updateSet = rows;
-
-    rows.exit().remove();
-
-    enterSet.append("tr").attr('class', 'dataRow');
-
-    d3.selectAll('.dataRow').html("");
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Name];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Theme];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Subtheme];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Release_Year];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-      
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Pieces];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.USD_MSRP];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-  
-    };
-    */
   }
 }
 

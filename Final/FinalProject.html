@@ -45,7 +45,7 @@
     </div>
     <!-- <p class="info">Name: ; E-Mail: ; A#: </p> -->
     <div id="year-chart" class="view"></div>
-
+    
     <div class="overviewCharts">
       <div class="topChart">
         <h2 id="top-themes-title">Top Themes of All Time</h2>
@@ -64,18 +64,38 @@
         </svg>
       </div>
       <div class="topChart">
-          <h2 id="most-expensive-sets-title">Most Expensive Sets of All Time</h2>
-          <svg width="500" height="400">
-            <g id="xAxisMostExpensiveSets"></g>
-            <g id="yAxisMostExpensiveSets"></g>
-            <g id="mostExpensiveSetsBars"></g>
+        <h2 id="most-expensive-sets-title">Most Expensive Sets of All Time</h2>
+        <svg width="500" height="400">
+          <g id="xAxisMostExpensiveSets"></g>
+          <g id="yAxisMostExpensiveSets"></g>
+          <g id="mostExpensiveSetsBars"></g>
+        </svg>
+      </div>
+      <div class="tableAndSelCharts">
+        <div class="selectedOverview">
+            <div id="legoTable">
+  
+              </div>
+        </div>
+        <div class="selectedOverview">
+          <h2 id="price-vs-time-title">Price of Sets over All Time</h2>
+          <svg width="500" height="300" id="price-vs-time-svg">
+            <g id="xAxisPriceVTime"></g>
+            <g id="yAxisPriceVTime"></g>
+            <g id="priceVTimeChart"></g>
           </svg>
+
+          <h2 id="size-vs-time-title">Size of Sets over All Time</h2>
+          <svg width="500" height="300" id="size-vs-time-svg">
+            <g id="xAxisSizeVTime"></g>
+            <g id="yAxisSizeVTime"></g>
+            <g id="sizeVTimeChart"></g>
+          </svg>
+        </div>
         </div>
     </div>
 
-    <div id="legoTable">
     
-    </div>
 
     <script type="application/javascript" src="public/js/yearChart.js"></script>
     <script type="application/javascript" src="public/js/topThemesBarChart.js"></script>
@@ -86,6 +106,7 @@
     <script type="application/javascript" src="public/js/themePopup.js"></script>
     <script type="application/javascript" src="public/js/nameTooltip.js"></script>
     <script type="application/javascript" src="public/js/ThemeStackedbarChart.js"></script>
+    <script type="application/javascript" src="public/js/setsOverTimeChart.js"></script>
     <script type="application/javascript" src="public/js/lego.js"></script>
     <script type="application/javascript" src="public/js/script.js"></script>
     

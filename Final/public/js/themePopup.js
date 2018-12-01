@@ -20,7 +20,6 @@ class ThemePopup {
 
       d3.select("body")
         .on("click", function(d){
-          console.log("clicked body", ctx);
           if(d3.event.pageX > ctx.x + ctx.svgWidth || d3.event.pageX < ctx.x - 20 || d3.event.pageY > ctx.y + ctx.svgHeight * 2 + 40 || d3.event.pageY < ctx.y)
             ctx.themePopup.style("visibility", "hidden");
         })
@@ -74,7 +73,6 @@ class ThemePopup {
     }
   
     mouseout(d) {
-      console.log("mouse out");
       this.themePopup.style("visibility", "hidden");
     }
 

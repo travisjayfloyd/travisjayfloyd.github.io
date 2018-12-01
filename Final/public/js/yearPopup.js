@@ -22,9 +22,6 @@ class YearPopup {
      * Gets the HTML content for a yearPopup.
      */
     yearPopup_html(year) {
-      let yearSets = [];
-      // this.legos.filter(legoset => legoset.Year == d).forEach(set=> yearSets.push(set));
-      console.log(yearSets);
       let text = "<div class='year-popup'>"
       text += "<h2>" + year + "</h2>";
   

@@ -45,19 +45,7 @@ class ThemeStackedBarChart {
             .range(["#FF6666", "#8B3626"]);
 
         let padding = 5;
-        
-        //TODO maybe what I want to do here is filter out any that are less than like <10> of price or size and put the rest in other...
 
-        // let displaySets = [];
-        // if(legoSets.length > setCount)
-        //     displaySets = legoSets.slice(0, setCount);
-        // //Gets all the leftover sets to put into an 'other sets' section of stacked bar chart
-        // let newLegoSets = legoSets.slice(setCount, legoSets.length)
-        // oneAttrLegoSets = newLegoSets.map(mapFunc);
-        // totalOfType = oneAttrLegoSets.reduce(sumFunc);
-
-        // displaySets.push({"Name": "Other Sets", [ctx.type]: totalOfType})
-        // console.log("display sets: ", displaySets);
         let nameTooltip = new NameTooltip(this.type);
 
         let setRects = this.svg.selectAll("rect." + this.type + "-sets")
@@ -89,75 +77,6 @@ class ThemeStackedBarChart {
         .on("mousemove", (d)=>nameTooltip.mousemove(d))
         .on("mouseover", (d)=>nameTooltip.mouseover(d))
         .on("mouseout", (d)=>nameTooltip.mouseout(d));
-
-        // //Display a bar with minimal width in the center of the bar chart to indicate the 50% mark
-        // //HINT: Use .middlePoint class to style this bar.
-        // svg.append("rect")
-        // .attr("width", 1)
-        // .attr("height", 50)
-        // .attr("x", ctx.svgWidth/2)
-        // .attr("y", padding - 5)
-        // .attr("class", "middlePoint")
-
-        
-        // //Display total count of electoral votes won by the Democrat and Republican party
-        // //on top of the corresponding groups of bars.
-        // //HINT: Use the .electoralVoteText class to style your text elements;  Use this in combination with
-        // // chooseClass to get a color based on the party wherever necessary
-        
-        // //Just above this, display the text mentioning the total number of electoral votes required
-        // // to win the elections throughout the country
-        // //HINT: Use .electoralVotesNote class to style this text element
-        // let textData = [
-        // {
-        //     text: totalRepEV,
-        //     class: "R",
-        //     xPos: ctx.svgWidth - 50
-        // },
-        // {
-        //     text: totalDemEV,
-        //     class: "D",
-        //     xPos: ctx.firstDemX
-        // },
-        // {
-        //     text: "Electoral Vote(" + parseInt(totalEV/2) + " needed to win)",
-        //     class: "mid",
-        //     xPos: ctx.svgWidth/2
-        // }];
-
-        // if(totalIndEV != 0)
-        //     textData = [{
-        //     text: totalIndEV,
-        //     class: "I",
-        //     xPos: 0
-        //     }].concat(textData);
-
-        // let evTexts = svg.selectAll("text.electoralVotesNote, text.electoralVoteText").data(textData)
-        // .text((d)=>d.text)
-        // .attr('dx', (d)=>d.xPos)
-        // .attr("class", (d)=>{
-        //                         if(d.class === "mid")
-        //                         return "electoralVotesNote" 
-        //                         else
-        //                         return "electoralVoteText " + ctx.chooseClass(d.class)
-        //                     });
-
-        // evTexts.enter()
-        // .append("text")
-        // .text((d)=>d.text)
-        // .attr('dx', (d)=>d.xPos)
-        // .attr('dy', 30)
-        // .attr("class", (d)=>{
-        //                         if(d.class === "mid")
-        //                         return "electoralVotesNote" 
-        //                         else
-        //                         return "electoralVoteText " + ctx.chooseClass(d.class)
-        //                     });
-
-        // evTexts.exit().remove();
-        
-        // ctx.evCurrent = 0;
-        // ctx.firstDemX = 0;
         
     };
   

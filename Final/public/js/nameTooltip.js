@@ -36,7 +36,6 @@ class NameTooltip {
     }
   
     mouseover(set) {
-        console.log("name tooltip: ", set)
       this.nameTooltip
         .html(this.nameTooltip_html(set))
         .classed('popup-title', true)

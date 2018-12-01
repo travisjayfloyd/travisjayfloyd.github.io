@@ -140,9 +140,23 @@ h3{
     width: 100%;
 }
 
+.tableAndSelCharts {
+    padding: 0.5em;
+    width: 100%;
+}
+
+#price-vs-time-title, #price-vs-time-svg, #size-vs-time-title, #size-vs-time-svg{
+    padding-left: 180px;
+}
+
 .topChart {
     float:left;
     width: 33%;
+}
+
+.selectedOverview {
+    float:left;
+    width: 50%;
 }
 
 .head {
@@ -187,4 +201,15 @@ th.des:after {
 th.asc:after {
     /* down */
     content: "\2193";
+}
+
+.line {
+    fill: none;
+    stroke: #03396c;
+    stroke-width: 3;
+}
+
+.point {
+    fill: #3C6992;
+    stroke: #fff;
 }

@@ -12,14 +12,12 @@ class MostExpensiveSetsBarChart {
     //This function accepts a list of set objects
     update(sets) {
       let mostExpensiveSets = this.lego.getMostExpensiveSets(sets, 25);
-    //   console.log("most expensive sets: ", mostExpensiveSets);
       let width = 500;
       let height = 260;
       let xPadding = 55;
       let yPadding = 0;
       let setNames = mostExpensiveSets.map(function(obj){return obj.Name});
       let yData = mostExpensiveSets.map(function(obj){return parseInt(obj.USD_MSRP)});
-    //   console.log("yData: ", yData);
       let yDataMax = d3.max(yData);
       let yDataMin = d3.min(yData);
 

@@ -9,7 +9,7 @@ class YearChart {
    * @param biggestSetsChart instance of the biggestSetsChart
    * @param mostExpensiveSetsChart instance of the mostExpensiveSetsChart
    */
-  constructor (legos, tableChart, topThemesChart, biggestSetsChart, mostExpensiveSetsChart) {
+  constructor (legos, tableChart, topThemesChart, biggestSetsChart, mostExpensiveSetsChart, priceVTimeChart, sizeVTimeChart) {
 
     this.legos = legos;
     this.years = new Array();
@@ -21,6 +21,8 @@ class YearChart {
     this.biggestSetsChart = biggestSetsChart;
     this.topThemesChart = topThemesChart;
     this.mostExpensiveSetsChart = mostExpensiveSetsChart;
+    this.priceVTimeChart = priceVTimeChart;
+    this.sizeVTimeChart = sizeVTimeChart;
 
     this.updateCharts(this.years);
     
@@ -62,6 +64,8 @@ class YearChart {
     this.topThemesChart.update(yearSets);
     this.biggestSetsChart.update(yearSets);
     this.mostExpensiveSetsChart.update(yearSets);
+    this.priceVTimeChart.update(selectedYears);
+    this.sizeVTimeChart.update(selectedYears);
     if(!this.firstTime) {
       this.tableChart.update(yearSets);
     } else {
@@ -95,8 +99,6 @@ class YearChart {
     let brushed = function(){
       let selectedYears = [];
       if(d3.event.selection != null && !(d3.event.selection[0] == 0 && d3.event.selection[1] == 0)){
-        console.log("brushed");
-        console.log("d3.event.selection[0]: ", d3.event.selection[0]);
         let lowBound = d3.event.selection[0];
         let highBound = d3.event.selection[1];
         let circles = d3.select("#year-chart").select("svg").selectAll("circle");
