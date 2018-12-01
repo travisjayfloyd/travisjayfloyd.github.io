@@ -10,9 +10,9 @@ class MostExpensiveSetsBarChart {
     }
 
     //This function accepts a list of set objects
-    update(sets) {
+    update(sets, selected) {
       let mostExpensiveSets = this.lego.getMostExpensiveSets(sets, 25);
-    //   console.log("most expensive sets: ", mostExpensiveSets);
+      //console.log("most expensive sets: ", mostExpensiveSets);
       let width = 500;
       let height = 260;
       let xPadding = 55;
@@ -63,7 +63,19 @@ class MostExpensiveSetsBarChart {
           .attr("y", d => yScale(d.USD_MSRP))
           .attr("height", d => {return height - yScale(d.USD_MSRP)})
           .attr("width", xScale.bandwidth())
-          .style("fill", d => colorScale(d.USD_MSRP))
+          .style("fill", function(d){
+            if(selected != null){
+              if(d.Name != selected.name.Name){
+               return colorScale(d.USD_MSRP);
+              }
+              else{
+                return "FF6666";
+              }
+            }
+            else{
+              return colorScale(d.USD_MSRP);
+            }
+          });
     
         rects.enter().append("rect")
           .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
@@ -71,7 +83,19 @@ class MostExpensiveSetsBarChart {
           .attr("height", function(d) {return height - yScale(d.USD_MSRP)})
           .attr("x", d => xScale(d.Name))
           .attr("y", d => yScale(d.USD_MSRP))
-          .style("fill", d => colorScale(d.USD_MSRP))
+          .style("fill", function(d){
+            if(selected != null){
+              if(d.Name != selected.name.Name){
+               return colorScale(d.USD_MSRP);
+              }
+              else{
+                return "FF6666";
+              }
+            }
+            else{
+              return colorScale(d.USD_MSRP);
+            }
+          });
           rects.exit().remove();
 
         

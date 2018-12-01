@@ -188,3 +188,8 @@ th.asc:after {
     /* down */
     content: "\2193";
 }
+
+tr{
+    background-color: #FFE330;
+
+}

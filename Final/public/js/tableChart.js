@@ -70,7 +70,10 @@ class TableChart {
      */
     update(fullarray) {
       let ctx = this;
-      this.table.style("visibility", "visible");
+      this.table.style("visibility", "visible").attr("width", "1000px");
+      let mostExpensiveSetsBarChart = new MostExpensiveSetsBarChart();
+      let biggestSetsBarChart = new BiggestSetsBarChart();
+      let topThemesBarChart = new TopThemesBarChart();
 
       let legos = new Array();
       for(var i = 0; i < fullarray.length; i++){
@@ -93,7 +96,9 @@ class TableChart {
 
     rows.exit().remove();
 
-    enterRows.append("tr").attr('class', 'dataRow');
+    enterRows.append("tr")
+      .style("background-color", "#FFE330")
+      .attr('class', 'dataRow');
     d3.selectAll('.dataRow').html("");
 
     d3.selectAll('.dataRow')
@@ -110,107 +115,21 @@ class TableChart {
     })
     .enter()
     .append("td")
-    .text(d => d.value);
-    // .html(d => d)
-  ;
-///////////////////////////////////////////////////////////////////////////////////////     
-    // rows.selectAll('td')
-    //   .data(function(d) {
-    //     return titles.map(function(key, i) {
-    //       return {
-    //         'value': d[key],
-    //         'name': d
-    //       };
-    //     });
-    //   })
-    //   .enter()
-    //   .append('td')
-    //   .attr('data-th', function(d) {
-    //     return d.Name;
-    //   })
-    //   .text(function(d) {
-    //       return d.value
-    //   });
-
-
-    /*
-    
-    // Create table rows
-
-    let rows = d3.select("#legoTable").select("tbody").selectAll("tr")
-      .data(legos);
-
-    let enterSet = rows.enter();
-    let updateSet = rows;
-
-    rows.exit().remove();
-
-    enterSet.append("tr").attr('class', 'dataRow');
-
-    d3.selectAll('.dataRow').html("");
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Name];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Theme];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Subtheme];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Release_Year];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-      
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.Pieces];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
-
-    d3.selectAll('.dataRow')
-      .selectAll("th")
-      .data(function(d) {
-        return [d.USD_MSRP];
-      })
-      .enter()
-      .append("td")
-      .html(d => d)
-    ;
+    .style("text-align", "center")
+    .style("background-color", "#b3cde0")
+    .text(d => d.value)
+    .on('mouseover', function(d,i){
+      d3.select(this)
+      .style("background-color", "#FF6666");
+      mostExpensiveSetsBarChart.update(fullarray, d);
+      biggestSetsBarChart.update(fullarray, d);
+      topThemesBarChart.update(fullarray, d);
+    })
+    .on('mouseout', function(d,i){
+      d3.select(this)
+      .style("background-color", "#b3cde0");
+    });
   
-    };
-    */
   }
 }
 
