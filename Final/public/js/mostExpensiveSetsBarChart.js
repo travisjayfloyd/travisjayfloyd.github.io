@@ -96,6 +96,18 @@ class MostExpensiveSetsBarChart {
               return colorScale(d.USD_MSRP);
             }
           });
+
+          rects
+            .on('mouseover', function(d,i){
+              d3.select(this)
+              .style("fill", "#FF6666");
+              
+            })
+            .on('mouseout', function(d,i){
+              d3.select(this)
+              .style("fill", d => colorScale(d.USD_MSRP));
+            });
+
           rects.exit().remove();
 
         

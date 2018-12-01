@@ -96,6 +96,18 @@ class BiggestSetsBarChart {
               return colorScale(d.Pieces);
             }
           });
+
+          rects
+            .on('mouseover', function(d,i){
+              d3.select(this)
+              .style("fill", "#FF6666");
+              
+            })
+            .on('mouseout', function(d,i){
+              d3.select(this)
+              .style("fill", d => colorScale(d.Pieces));
+            });
+
           rects.exit().remove();
 
         

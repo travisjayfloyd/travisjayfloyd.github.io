@@ -224,13 +224,13 @@ class YearChart {
           .style("stroke-width", "1");
           
         let smalltext = d3.select('#legolegend').append('text')
-          .attr("x", "45")
+          .attr("x", "49")
           .attr("y", "29")
           .attr("text-anchor", "middle")
           .style("font-size", "12px")
           .style("stroke", "black")
           .style("stroke-width", "1")
-          .html("Less Sets");
+          .html("Fewer Sets");
 
         let largecircle = d3.select('#legolegend').append('circle')
           .attr("cx", "100")
