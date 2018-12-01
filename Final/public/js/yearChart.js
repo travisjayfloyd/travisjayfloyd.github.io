@@ -70,6 +70,7 @@ class YearChart {
       years.push(i);
     }
     let width = this.svgWidth;
+    let height = this.svgHeight;
     let setsperyear = new Array();
     
     for(var i = 0; i < 45; i++){
@@ -176,6 +177,20 @@ class YearChart {
         })
         .attr("pointer-events", "all")
         ;
+
+        this.svg.selectAll('text')
+          .data(years)
+          .enter()
+          .append('text')
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d, i){
+              let xval = (width / 45) * i + 8;
+              let yval = ((height/ 2)+ 33);
+              return "translate(" +xval+","+yval+")rotate(90)"
+          })
+          .style("font-size", "10px")
+          .style("stroke", "black")
+          .html(d => d);
         d3.select(".brush").call(brush.move, [[0], [0]], [[0], [0]]);
     }
     

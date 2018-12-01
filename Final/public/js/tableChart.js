@@ -52,6 +52,8 @@ class TableChart {
     var table = d3.select('#legoTable').append('table');
     var titles = d3.keys(legos[0]);
     var titles = ["Name", "Subtheme", "Release_Year", "Pieces", "Price"]
+
+
     var headers = table.append('thead').append('tr')
       .selectAll('th')
       .data(titles).enter()
@@ -95,6 +97,8 @@ class TableChart {
     let rows = table.append('tbody').selectAll('tr')
       .data(legos).enter()
       .append('tr');
+
+
     rows.selectAll('td')
       .data(function(d) {
         return titles.map(function(key, i) {
