@@ -64,9 +64,10 @@ class TopThemesBarChart {
         .attr("width", xScale.bandwidth())
         .style("fill", d => colorScale(d.sum));
       rects
-      .on("mousemove", (d)=>themePopup.mousemove(d))
-      .on("mouseover", (d)=>themePopup.mouseover(d))
-      .on("mouseout", (d)=>themePopup.mouseout(d));
+      .on("click", (d)=>themePopup.click(d))
+      // .on("mousemove", (d)=>themePopup.mousemove(d))
+      // .on("mouseover", (d)=>themePopup.mouseover(d))
+      // .on("mouseout", (d)=>themePopup.mouseout(d));
   
       rects.enter().append("rect")
         .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
@@ -76,9 +77,10 @@ class TopThemesBarChart {
         .attr("y", d => yScale(d.sum))
         .style("fill", d => colorScale(d.sum));
       rects
-        .on("mousemove", (d)=>themePopup.mousemove(d))
-        .on("mouseover", (d)=>themePopup.mouseover(d))
-        .on("mouseout", (d)=>themePopup.mouseout(d));
+      .on("click", (d)=>themePopup.click(d))
+      // .on("mousemove", (d)=>themePopup.mousemove(d))
+      // .on("mouseover", (d)=>themePopup.mouseover(d))
+      // .on("mouseout", (d)=>themePopup.mouseout(d));
       rects.exit().remove();
 
         

@@ -16,6 +16,14 @@ class ThemePopup {
         .attr('id', 'themePopup')
         .classed('themePopupDiv', true)
       ;
+      let ctx = this;
+
+      d3.select("body")
+        .on("click", function(d){
+          console.log("clicked body", ctx);
+          if(d3.event.pageX > ctx.x + ctx.svgWidth || d3.event.pageX < ctx.x - 20 || d3.event.pageY > ctx.y + ctx.svgHeight * 2 + 40 || d3.event.pageY < ctx.y)
+            ctx.themePopup.style("visibility", "hidden");
+        })
     };
   
     /**
@@ -23,8 +31,7 @@ class ThemePopup {
      */
     themePopup_html(themeObj) {
       let text = "<div class='theme-popup'>"
-      text += "<h2>" + themeObj.Theme + "</h2>";
-  
+      text += "<h1>" + themeObj.Theme + "</h1>";  
       text += "</div>"
       return text;
     }
@@ -34,16 +41,20 @@ class ThemePopup {
         .html(this.themePopup_html(themeObj))
         .classed('popup-title', true)
       ;
-      let svgWidth = 600;
-      let svgHeight = 150;
+      this.svgWidth = 800;
+      this.svgHeight = 150;
+      this.themePopup.append("h2")
+        .text("Each Bar Below Represents the Number of Pieces Per Set (Hover For the Name)");
       let sizeStackedSvg = this.themePopup.append("svg")
-      .attr("width", svgWidth)
-      .attr("height", svgHeight)
-      .style("display", "block");
+        .attr("width", this.svgWidth)
+        .attr("height", this.svgHeight)
+        .style("display", "block");
+      this.themePopup.append("h2")
+        .text("Each Bar Below Represents the Price Per Set (Hover For the Name)");
       let priceStackedSvg = this.themePopup.append("svg")
-      .attr("width", svgWidth)
-      .attr("height", svgHeight)
-      .style("display", "block");
+        .attr("width", this.svgWidth)
+        .attr("height", this.svgHeight)
+        .style("display", "block");
       let sizeChart = new ThemeStackedBarChart("Pieces", sizeStackedSvg);
       let priceChart = new ThemeStackedBarChart("USD_MSRP", priceStackedSvg);
 
@@ -56,12 +67,20 @@ class ThemePopup {
     }
   
     mousemove(d) {
-      this.themePopup.style("top", (d3.event.pageY-220) + "px")
-                    .style("left", (d3.event.pageX+20) + "px");
+      this.y = (d3.event.pageY-220);
+      this.x = (d3.event.pageX+20);
+      this.themePopup.style("top", this.y + "px")
+                    .style("left", this.x + "px");
     }
   
     mouseout(d) {
+      console.log("mouse out");
       this.themePopup.style("visibility", "hidden");
+    }
+
+    click(d) {
+      this.mousemove(d);
+      this.mouseover(d);
     }
   
   };

@@ -9,7 +9,7 @@ class ThemeStackedBarChart {
     constructor (type, svg){
       this.type = type;
       this.svg = svg;
-      this.currentSetX = 0;
+      this.currentSetX = 5;
     };  
   
     /**
@@ -39,9 +39,9 @@ class ThemeStackedBarChart {
         let totalOfType = oneAttrLegoSets.reduce(sumFunc);
         this.stackScale = d3.scaleLinear()
             .domain([0, totalOfType])
-            .range([0, parseInt(ctx.svg.style("width"))]);
+            .range([0, (parseInt(ctx.svg.style("width")) - 10)]);
         let colorScale = d3.scaleLinear()
-            .domain([totalOfType, 0])
+            .domain([0, Math.max(...oneAttrLegoSets)])
             .range(["#FF6666", "#8B3626"]);
 
         let padding = 5;
@@ -58,6 +58,7 @@ class ThemeStackedBarChart {
 
         // displaySets.push({"Name": "Other Sets", [ctx.type]: totalOfType})
         // console.log("display sets: ", displaySets);
+        let nameTooltip = new NameTooltip(this.type);
 
         let setRects = this.svg.selectAll("rect." + this.type + "-sets")
         .data(legoSets)
@@ -69,7 +70,10 @@ class ThemeStackedBarChart {
             ctx.currentSetX = currentX + ctx.stackScale(d[ctx.type]);
             return currentX;
         })
-        .attr("fill", (d)=>{return colorScale(d[ctx.type])});
+        .attr("fill", (d)=>{return colorScale(d[ctx.type])})
+        .on("mousemove", (d)=>nameTooltip.mousemove(d))
+        .on("mouseover", (d)=>nameTooltip.mouseover(d))
+        .on("mouseout", (d)=>nameTooltip.mouseout(d));
         
         setRects.enter().append("rect")
         .attr("width", function(d) { return ctx.stackScale(d[ctx.type]); })
@@ -80,8 +84,11 @@ class ThemeStackedBarChart {
             return currentX;
         })
         .attr("y", 40 + padding)
-        .attr("class", "electoralVotes")
-        .attr("fill", (d)=>{return colorScale(d[ctx.type])});
+        .attr("class", this.type + "-sets")
+        .attr("fill", (d)=>{return colorScale(d[ctx.type])})
+        .on("mousemove", (d)=>nameTooltip.mousemove(d))
+        .on("mouseover", (d)=>nameTooltip.mouseover(d))
+        .on("mouseout", (d)=>nameTooltip.mouseout(d));
 
         // //Display a bar with minimal width in the center of the bar chart to indicate the 50% mark
         // //HINT: Use .middlePoint class to style this bar.

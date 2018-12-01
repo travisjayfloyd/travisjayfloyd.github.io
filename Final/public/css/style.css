@@ -113,7 +113,7 @@ h2{
     pointer-events: none;
 }
 
-.year-popup, .theme-popup{
+.year-popup, .theme-popup, .nameTooltip{
     padding: 5px;
 }
 
@@ -161,6 +161,11 @@ h3{
     width: 99%;
     margin: 0 auto;
     padding-top: 40px;
+}
+
+.popup-title {
+    text-align: center;
+    font-size: 18px;
 }
 
 .lego-heads::after {
