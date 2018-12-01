@@ -3,18 +3,21 @@ class YearChart {
 
   /**
    * Constructor for the Year Chart
-   * @param table instance of the tablechart
    * @param legos instance of Legos
+   * @param tableChart instance of the tableChart
+   * @param topThemesChart instance of the topThemesChart
+   * @param biggestSetsChart instance of the biggestSetsChart
+   * @param mostExpensiveSetsChart instance of the mostExpensiveSetsChart
    */
-  constructor (legos, table, topThemesChart, biggestSetsChart, mostExpensiveSetsChart) {
+  constructor (legos, tableChart, topThemesChart, biggestSetsChart, mostExpensiveSetsChart) {
 
-    this.table = table;
     this.legos = legos;
     this.years = new Array();
     for(var i = 1971; i < 2016; i++){
       this.years.push(i);
     }
-    this.tablechart = new TableChart(legos);
+    this.firstTime = true;
+    this.tableChart = tableChart;
     this.biggestSetsChart = biggestSetsChart;
     this.topThemesChart = topThemesChart;
     this.mostExpensiveSetsChart = mostExpensiveSetsChart;
@@ -59,7 +62,11 @@ class YearChart {
     this.topThemesChart.update(yearSets);
     this.biggestSetsChart.update(yearSets);
     this.mostExpensiveSetsChart.update(yearSets);
-    this.tablechart.update(yearSets);
+    if(!this.firstTime) {
+      this.tableChart.update(yearSets);
+    } else {
+      this.firstTime = false;
+    }
   }
 
   /**
@@ -88,6 +95,8 @@ class YearChart {
     let brushed = function(){
       let selectedYears = [];
       if(d3.event.selection != null && !(d3.event.selection[0] == 0 && d3.event.selection[1] == 0)){
+        console.log("brushed");
+        console.log("d3.event.selection[0]: ", d3.event.selection[0]);
         let lowBound = d3.event.selection[0];
         let highBound = d3.event.selection[1];
         let circles = d3.select("#year-chart").select("svg").selectAll("circle");
@@ -177,7 +186,7 @@ class YearChart {
         ;
 
         this.svg.selectAll('text')
-          .data(years)
+          .data(this.years)
           .enter()
           .append('text')
           .attr("text-anchor", "middle")
@@ -186,7 +195,7 @@ class YearChart {
               let yval = ((height/ 2)+ 33);
               return "translate(" +xval+","+yval+")rotate(90)"
           })
-          .style("font-size", "10px")
+          .style("font-size", "12px")
           .style("stroke", "black")
           .html(d => d);
         d3.select(".brush").call(brush.move, [[0], [0]], [[0], [0]]);

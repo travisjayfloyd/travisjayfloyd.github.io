@@ -5,26 +5,62 @@ class TableChart {
      * Creates a Table Object
      */
     constructor(data) {
-  
-      // Create list of all elements that will populate the table
-      // Initially, the tableElements will be identical to the legoData
-      this.tableElements = data.slice();
+      let ctx = this;
       this.legoData = data;
-  
+      console.log("initial data: ", data);
+      this.prevHeader = {className:""};
       // Default values for the Table Headers
-      this.tableHeaders = ["Name", "Subtheme", "Release Year", "Pieces", "Price"];
-  
-      // To be used when sizing the svgs in the table cells.
-      this.cell = {
-        "width": 70,
-        "height": 20,
-        "buffer": 15
-      };
-  
-      this.bar = {
-        "height": 20
-      };
-  
+      this.sortAscending = true;
+      this.tableHeaders = ["Name", "Theme", "Subtheme", "Release Year", "Pieces", "Price"];
+      this.table = d3.select('#legoTable').append('table');
+      let tHead = this.table.append("thead");
+      this.tBody = this.table.append("tbody");
+      tHead.append("tr")
+        .selectAll('th')
+        .data(this.tableHeaders).enter()
+        .append('th')
+        .text(function(d) {
+          return d
+        })
+        .on('click', function(d) {
+          if(d == "Release Year")
+            d = "Release_Year";
+          tHead.attr('class', 'header');
+          if (d == "Name" || d == "Subtheme" || d == "Theme") { //alphabetical sort
+            if (this.sortAscending) {
+              d3.selectAll('.dataRow').sort(function(a, b) {
+                return d3.ascending(a[d], b[d]);
+              });
+              this.sortAscending = false;
+              this.className = 'asc';
+            } else {
+              d3.selectAll('.dataRow').sort(function(a, b) {
+                return d3.descending(a[d], b[d]);
+              });
+              this.sortAscending = true;
+              this.className = 'des';
+            }
+          } else { 
+            if (this.sortAscending) {
+              d3.selectAll('.dataRow').sort(function(a, b) {
+                return b[d] - a[d];
+              });
+              this.sortAscending = false;
+              this.className = 'asc';
+            } else {
+              d3.selectAll('.dataRow').sort(function(a, b) {
+                return a[d] - b[d];
+              });
+              this.sortAscending = true;
+              this.className = 'des';
+            }
+          }
+          if(ctx.prevHeader && ctx.prevHeader != this)
+            ctx.prevHeader.className = 'noSort';
+          ctx.prevHeader = this;
+        });
+
+        this.table.style("visibility", "hidden");
     }
   
   
@@ -33,6 +69,8 @@ class TableChart {
      * variable tableElements.
      */
     update(fullarray) {
+      let ctx = this;
+      this.table.style("visibility", "visible");
 
       let legos = new Array();
       for(var i = 0; i < fullarray.length; i++){
@@ -47,82 +85,52 @@ class TableChart {
       }
 
 
-    //********* - START TABLE - *********
-    var sortAscending = true;
-    var table = d3.select('#legoTable').append('table');
-    var titles = d3.keys(legos[0]);
-    var titles = ["Name","Theme", "Subtheme", "Release_Year", "Pieces", "Price"]
-    var headers = table.append('thead').append('tr')
-      .selectAll('th')
-      .data(titles).enter()
-      .append('th')
-      .text(function(d) {
-        return d
-      })
-      .on('click', function(d) {
-        headers.attr('class', 'header');
-        if (d == "Name" || d == "Subtheme") { //alphabetical sort
-          if (sortAscending) {
-            rows.sort(function(a, b) {
-              return d3.ascending(a[d], b[d]);
-            });
-            sortAscending = false;
-            this.className = 'aes';
-          } else {
-            rows.sort(function(a, b) {
-              return d3.descending(a[d], b[d]);
-            });
-            sortAscending = true;
-            this.className = 'des';
-          }
-        } else { 
-          if (sortAscending) {
-            rows.sort(function(a, b) {
-              return b[d] - a[d];
-            });
-            sortAscending = false;
-            this.className = 'aes';
-          } else {
-            rows.sort(function(a, b) {
-              return a[d] - b[d];
-            });
-            sortAscending = true;
-            this.className = 'des';
-          }
-        }
-      });
-      
+    // ********* - START TABLE - *********   
      
-    let rows = table.append('tbody').selectAll('tr')
-      .data(legos)
-      .enter()
-      .append('tr');
+    let rows = this.tBody.selectAll('tr')
+      .data(legos);
+    let enterRows = rows.enter();
 
-    table.exit().remove();
-      
-
-    let enterSet = rows.enter();
     rows.exit().remove();
-    enterSet.append("tr").attr('class', 'dataRow');
 
+    enterRows.append("tr").attr('class', 'dataRow');
+    d3.selectAll('.dataRow').html("");
 
-    rows.selectAll('td')
-      .data(function(d) {
-        return titles.map(function(key, i) {
-          return {
-            'value': d[key],
-            'name': d
-          };
-        });
-      })
-      .enter()
-      .append('td')
-      .attr('data-th', function(d) {
-        return d.Name;
-      })
-      .text(function(d) {
-          return d.value
+    d3.selectAll('.dataRow')
+    .selectAll("td")
+    .data(function(d) {
+      return ctx.tableHeaders.map(function(key, i) {
+        if(key == "Release Year")
+          key = "Release_Year";
+        return {
+          'value': d[key],
+          'name': d
+        };
       });
+    })
+    .enter()
+    .append("td")
+    .text(d => d.value);
+    // .html(d => d)
+  ;
+///////////////////////////////////////////////////////////////////////////////////////     
+    // rows.selectAll('td')
+    //   .data(function(d) {
+    //     return titles.map(function(key, i) {
+    //       return {
+    //         'value': d[key],
+    //         'name': d
+    //       };
+    //     });
+    //   })
+    //   .enter()
+    //   .append('td')
+    //   .attr('data-th', function(d) {
+    //     return d.Name;
+    //   })
+    //   .text(function(d) {
+    //       return d.value
+    //   });
 
 
     /*

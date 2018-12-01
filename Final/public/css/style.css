@@ -173,3 +173,13 @@ h3{
     padding-top: 30px;
     padding-bottom: 10px;
 }
+
+th.des:after {
+    /* up */
+    content: "\2191";
+}
+
+th.asc:after {
+    /* down */
+    content: "\2193";
+}
