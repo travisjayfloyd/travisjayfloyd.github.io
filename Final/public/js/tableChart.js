@@ -68,7 +68,7 @@ class TableChart {
      * Updates the table contents with a row for each element in the global
      * variable tableElements.
      */
-    update(fullarray) {
+    update(fullarray, selected) {
       let ctx = this;
       this.table.style("visibility", "visible").attr("width", "1000px");
       let mostExpensiveSetsBarChart = new MostExpensiveSetsBarChart();
@@ -117,6 +117,19 @@ class TableChart {
     .append("td")
     .style("text-align", "center")
     .style("background-color", "#b3cde0")
+    /*.style("backgroud-color", function(d){
+      if(selected == null){
+        return "#b3cde0";
+      }
+      else{
+        if(d.name.Theme != selected.Theme){
+          return "#b3cde0";
+        }
+        else{
+          return "#FF6666";
+        }
+      }
+    })*/
     .text(d => d.value)
     .on('mouseover', function(d,i){
       d3.select(this)

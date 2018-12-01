@@ -31,7 +31,7 @@ class YearChart {
     //fetch the svg bounds
     this.svgBounds = divyearChart.node().getBoundingClientRect();
     this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
-    this.svgHeight = 100;
+    this.svgHeight = 120;
 
     //add the svg to the div
     this.svg = divyearChart.append("svg")
@@ -73,6 +73,8 @@ class YearChart {
    * Creates a chart with circles representing each election year, populates text content and other required elements for the Year Chart
    */
   update (data) {
+
+    
 
     let ctx = this;
     let width = this.svgWidth;
@@ -132,13 +134,13 @@ class YearChart {
     // Create the chart by adding circle elements representing each election year
     this.svg.append('line')
     .attr("x1", 0)
-        .attr("y1", (this.svgHeight / 2))
+        .attr("y1", (this.svgHeight / 2)-10)
         .attr("x2", width)
-        .attr("y2", (this.svgHeight / 2))
+        .attr("y2", (this.svgHeight / 2)-10)
         .style("stroke", "#A0A0A0")
         .style("stroke-dasharray", "2,2");
         
-        this.svg.selectAll('circle')
+    this.svg.selectAll('circle')
         .data(data)
         .enter()
         .append('circle')
@@ -150,7 +152,7 @@ class YearChart {
         .attr("cx", function(d,i) {
           return (width / 45  ) * i + 10;
         })
-        .attr("cy", (this.svgHeight / 2))
+        .attr("cy", (this.svgHeight / 2) - 10)
         .data(setsperyear)
         .attr("r", d => Math.log(d) *3)
         .data(this.years)
@@ -191,14 +193,63 @@ class YearChart {
           .append('text')
           .attr("text-anchor", "middle")
           .attr("transform", function(d, i){
-              let xval = (width / 45) * i + 8;
-              let yval = ((height/ 2)+ 33);
+              let xval = (width / 45) * i + 6;
+              let yval = ((height/ 2)+ 23);
               return "translate(" +xval+","+yval+")rotate(90)"
           })
           .style("font-size", "12px")
           .style("stroke", "black")
           .html(d => d);
         d3.select(".brush").call(brush.move, [[0], [0]], [[0], [0]]);
+
+        let legend = d3.select('#year-chart').append('svg')
+          .attr("id", "legolegend")
+          .attr("width", width)
+          .attr("height", "50")
+          .append('rect')
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("width", 190)
+          .attr("height", 50)
+          .style("stroke", "black")
+          .style("stroke-width", "2")
+          .style("fill", "white");
+
+        let smallcircle = d3.select('#legolegend').append('circle')
+          .attr("cx", "12")
+          .attr("cy", "25")
+          .attr("r", "7")
+          .style("fill", "#8B3626")
+          .style("stroke", "black")
+          .style("stroke-width", "1");
+          
+        let smalltext = d3.select('#legolegend').append('text')
+          .attr("x", "45")
+          .attr("y", "29")
+          .attr("text-anchor", "middle")
+          .style("font-size", "12px")
+          .style("stroke", "black")
+          .style("stroke-width", "1")
+          .html("Less Sets");
+
+        let largecircle = d3.select('#legolegend').append('circle')
+          .attr("cx", "100")
+          .attr("cy", "25")
+          .attr("r", "15")
+          .style("fill", "#FF6666")
+          .style("stroke", "black")
+          .style("stroke-width", "1");
+
+        let moretext = d3.select('#legolegend').append('text')
+          .attr("x", "145")
+          .attr("y", "29")
+          .attr("text-anchor", "middle")
+          .style("font-size", "12px")
+          .style("stroke", "black")
+          .style("stroke-width", "1")
+          .html("More Sets");
+        
+        
     }
     
 }

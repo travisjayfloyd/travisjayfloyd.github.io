@@ -12,6 +12,7 @@ class TopThemesBarChart {
     //This function accepts a list of lego data set entries. (When the page first loads, it will get all the entries, otherwise it'll get whatever their brush selection or their year selection is). 
     update(legoEntries, selected) {
       let topThemes = this.lego.getTopThemes(legoEntries, 20);
+      let tableChart = new TableChart();
       // console.log(topThemes);
       let width = 500;
       let height = 260;
@@ -76,13 +77,25 @@ class TopThemesBarChart {
             return colorScale(d.sum);
           }
         });
+        
       rects
       .on("click", (d)=>themePopup.click(d))
+      .on('mouseover', function(d,i){
+        d3.select(this)
+        .style("fill", "#b3cde0");
+        tableChart.update(legoEntries, d);
+      })
+      .on('mouseout', function(d,i){
+        d3.select(this)
+        .style("fill", d => colorScale(d.sum));
+      });
       // .on("mousemove", (d)=>themePopup.mousemove(d))
       // .on("mouseover", (d)=>themePopup.mouseover(d))
       // .on("mouseout", (d)=>themePopup.mouseout(d));
   
       rects.enter().append("rect")
+        .transition()
+        .duration(500)
         .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
         .attr("width", xScale.bandwidth())
         .attr("height", function(d) {return height - yScale(d.sum)})
