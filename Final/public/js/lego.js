@@ -4,6 +4,10 @@ class Lego {
         this.legos = legos;
     }
 
+    getSetsForTheme(themeName) {
+        return this.legos.filter(legoset => legoset.Theme == themeName);
+    }
+
     getTopThemes(legoEntries, howMany) {
         return this.getThemes(legoEntries, howMany, "biggest");
     }
@@ -44,7 +48,6 @@ class Lego {
         else
             sortFunction = function(a, b) {return (parseInt(a.Pieces) - parseInt(b.Pieces))}
         sets.sort(sortFunction);
-        console.log("get sets biggest: ", sets.slice(0, howMany));
         return sets.slice(0, howMany);
     }
 
@@ -60,21 +63,18 @@ class Lego {
         else
             sortFunction = function(a, b) {return (parseInt(a.USD_MSRP) - parseInt(b.USD_MSRP))}
         setsByPrice.sort(sortFunction);
-        console.log("get sets by price: ", setsByPrice.slice(0, howMany));
         return setsByPrice.slice(0, howMany);
     }
 
     getTopTheme(year) {
         let yearSets = this.legos.filter(legoset => legoset.Year == year);
         let topTheme = this.getTopThemes(yearSets, 1)[0];
-        console.log("top theme: ", topTheme)
         return topTheme;
     }
     
     getBiggestSet(year) {
         let yearSets = this.legos.filter(legoset => legoset.Year == year);
         let biggestSet = this.getBiggestSets(yearSets, 1)[0];
-        console.log("biggest set: ", biggestSet)
         return biggestSet;
     }
 

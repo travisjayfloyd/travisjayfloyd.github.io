@@ -1,11 +1,11 @@
-class Popup {
+class YearPopup {
 
     constructor(legos) {
       //----------------------------------------
-      // popup
+      // yearPopup
       //----------------------------------------
       this.lego = new Lego(legos);
-      this.popup = d3.select("body")
+      this.yearPopup = d3.select("body")
         .append("div")
         .style("position", "absolute")
         .style("z-index", "10")
@@ -13,16 +13,15 @@ class Popup {
         .style("background", "#f2f3f4")
         .style("border-radius", "20px")
         .style("font-size", "12px")
-        .attr('id', 'popup')
-        .classed('popupDiv', true)
+        .attr('id', 'yearPopup')
+        .classed('yearPopupDiv', true)
       ;
     };
   
     /**
-     * Gets the HTML content for a popup.
+     * Gets the HTML content for a yearPopup.
      */
-    popup_html(year) {
-      //TODO also need to make the popup for the table since this stuff is all just for the year chart
+    yearPopup_html(year) {
       let yearSets = [];
       // this.legos.filter(legoset => legoset.Year == d).forEach(set=> yearSets.push(set));
       console.log(yearSets);
@@ -34,13 +33,13 @@ class Popup {
     }
   
     mouseover(year) {
-      this.popup
-        .html(this.popup_html(year))
+      this.yearPopup
+        .html(this.yearPopup_html(year))
         .classed('popup-title', true)
       ;
       let svgWidth = 380;
       let svgHeight = 150;
-      let popupSvg = this.popup.append("svg")
+      let yearPopupSvg = this.yearPopup.append("svg")
       .attr("width", svgWidth)
       .attr("height", svgHeight);
       let cellWidth = 120;
@@ -54,7 +53,7 @@ class Popup {
           return "#265783"
       };
 
-      let tileRects = popupSvg.selectAll("Rect")
+      let tileRects = yearPopupSvg.selectAll("Rect")
       .data(previewInfo)
       .attr("x", (d, i) => {
         if(i >= 3) 
@@ -82,10 +81,10 @@ class Popup {
       .attr("class", "tile")
       .attr("fill", chooseColor)
 
-      //Create the data for the popup
+      //Create the data for the yearPopup
 
       let shorterLegoEntry = function(set){
-        let textLength = 14;
+        let textLength = 15;
         if(set.Name && set.Name.length > textLength) set.Name = set.Name.substring(0, textLength) + "...";
         if(set.Theme && set.Theme.length > textLength) set.Theme = set.Theme.substring(0, textLength) + "...";
         return set;
@@ -98,7 +97,7 @@ class Popup {
       let smallestSet = shorterLegoEntry(this.lego.getSmallestSet(year));
       let leastExpensiveSet = shorterLegoEntry(this.lego.getLeastExpensiveSet(year));
 
-      let popupData = [
+      let yearPopupData = [
         {previewHeader: "Top Theme", category: topTheme.Theme, quantity: topTheme.sum + " sets"},
         {previewHeader: "Biggest Set", category: biggestSet.Name, quantity: biggestSet.Pieces + " pieces"},
         {previewHeader: "Most $$ Set", category: mostExpensiveSet.Name, quantity: mostExpensiveSet.Pieces + " pieces"},
@@ -124,8 +123,8 @@ class Popup {
 
       //Display the preview header for each tile
       
-      let headertexts = popupSvg.selectAll("text.headertext")
-      .data(popupData)
+      let headertexts = yearPopupSvg.selectAll("text.headertext")
+      .data(yearPopupData)
       .text(d => (d.previewHeader))
       .attr('dx', getX)
       .attr('dy', (d, i) => {
@@ -143,8 +142,8 @@ class Popup {
 
       //Display the preview category for each tile
       
-      let categoryTexts = popupSvg.selectAll("text.categorytext")
-      .data(popupData)
+      let categoryTexts = yearPopupSvg.selectAll("text.categorytext")
+      .data(yearPopupData)
       .text(d => (d.category))
       .attr('dx', getX)
       .attr('dy', (d, i) => {
@@ -162,8 +161,8 @@ class Popup {
 
       //Display the preview quantity for each tile
       
-      let quantityTexts = popupSvg.selectAll("text.quantitytext")
-      .data(popupData)
+      let quantityTexts = yearPopupSvg.selectAll("text.quantitytext")
+      .data(yearPopupData)
       .text(d => (d.quantity))
       .attr('dx', getX)
       .attr('dy', (d, i) => {
@@ -183,8 +182,8 @@ class Popup {
       quantityTexts.exit().remove();
       categoryTexts.exit().remove();
 
-      //show the popup
-      this.popup.style("visibility", "visible");
+      //show the yearPopup
+      this.yearPopup.style("visibility", "visible");
     }
   
     mousemove(d) {
@@ -197,12 +196,12 @@ class Popup {
         top = (d3.event.pageY-220);
         left = (d3.event.pageX-400);
       }
-      this.popup.style("top", top + "px")
+      this.yearPopup.style("top", top + "px")
                 .style("left", left + "px");
     }
   
     mouseout(d) {
-      this.popup.style("visibility", "hidden");
+      this.yearPopup.style("visibility", "hidden");
     }
   
   };

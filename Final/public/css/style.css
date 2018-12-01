@@ -21,9 +21,13 @@ h1 {
 
 .categorytext, .quantitytext, .headertext{
     text-anchor:middle;
-    font-size: 12px;
+    font-size: 14px;
     fill: #f2f3f4;
     stroke-width: 0.1px;
+}
+
+.headertext {
+    font-weight: bold;
 }
 
 .yeartext, .brushtext{
@@ -87,6 +91,10 @@ h1 {
     r:25px;
 }
 
+.themeStackSets{
+    stroke: #eee;
+}
+
 
 h2{
     -webkit-margin-before: 5px;
@@ -104,20 +112,9 @@ h2{
     border-radius: 10px;
     pointer-events: none;
 }
-.popup-title{
-    font-size:18px;
-    font-family: "Arial Black";
 
-}
-
-.year-popup{
+.year-popup, .theme-popup{
     padding: 5px;
-}
-
-.tooltipDiv {
-    content: "\25BC";
-    border: 5px solid white;
-    border-radius: 10px;
 }
 
 h3{

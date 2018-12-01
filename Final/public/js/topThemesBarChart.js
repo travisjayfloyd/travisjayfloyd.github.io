@@ -51,26 +51,35 @@ class TopThemesBarChart {
         .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
         .call(yAxisThemes);
 
-        let bars = d3.select("#topThemesBars")
-        let rects = bars.selectAll("rect").data(topThemes);
-        rects
-          .transition()
-          .duration(500)
-          .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
-          .attr("x", d => xScale(d.Theme))
-          .attr("y", d => yScale(d.sum))
-          .attr("height", d => {return height - yScale(d.sum)})
-          .attr("width", xScale.bandwidth())
-          .style("fill", d => colorScale(d.sum))
-    
-        rects.enter().append("rect")
-          .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
-          .attr("width", xScale.bandwidth())
-          .attr("height", function(d) {return height - yScale(d.sum)})
-          .attr("x", d => xScale(d.Theme))
-          .attr("y", d => yScale(d.sum))
-          .style("fill", d => colorScale(d.sum))
-          rects.exit().remove();
+      let themePopup = new ThemePopup(this.legoData);
+      let bars = d3.select("#topThemesBars")
+      let rects = bars.selectAll("rect").data(topThemes);
+      rects
+        .transition()
+        .duration(500)
+        .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
+        .attr("x", d => xScale(d.Theme))
+        .attr("y", d => yScale(d.sum))
+        .attr("height", d => {return height - yScale(d.sum)})
+        .attr("width", xScale.bandwidth())
+        .style("fill", d => colorScale(d.sum));
+      rects
+      .on("mousemove", (d)=>themePopup.mousemove(d))
+      .on("mouseover", (d)=>themePopup.mouseover(d))
+      .on("mouseout", (d)=>themePopup.mouseout(d));
+  
+      rects.enter().append("rect")
+        .attr("transform", "translate(" + xPadding + ",-" + yPadding + ")")
+        .attr("width", xScale.bandwidth())
+        .attr("height", function(d) {return height - yScale(d.sum)})
+        .attr("x", d => xScale(d.Theme))
+        .attr("y", d => yScale(d.sum))
+        .style("fill", d => colorScale(d.sum));
+      rects
+        .on("mousemove", (d)=>themePopup.mousemove(d))
+        .on("mouseover", (d)=>themePopup.mouseover(d))
+        .on("mouseout", (d)=>themePopup.mouseout(d));
+      rects.exit().remove();
 
         
     }

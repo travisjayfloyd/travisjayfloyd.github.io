@@ -10,10 +10,16 @@ class YearChart {
 
     this.table = table;
     this.legos = legos;
+    this.years = new Array();
+    for(var i = 1971; i < 2016; i++){
+      this.years.push(i);
+    }
     this.tablechart = new TableChart(legos);
     this.biggestSetsChart = biggestSetsChart;
     this.topThemesChart = topThemesChart;
     this.mostExpensiveSetsChart = mostExpensiveSetsChart;
+
+    this.updateCharts(this.years);
     
     // Initializes the svg elements required for this chart
     this.margin = {top: 10, right: 20, bottom: 30, left: 50};
@@ -46,12 +52,10 @@ class YearChart {
   }
 
   updateCharts(selectedYears) {
-    console.log("update charts: ", selectedYears);
     let yearSets = [];
     selectedYears.forEach(year => {
       this.legos.filter(legoset => legoset.Year == year).forEach(set=>yearSets.push(set));
     });
-    console.log(yearSets);
     this.topThemesChart.update(yearSets);
     this.biggestSetsChart.update(yearSets);
     this.mostExpensiveSetsChart.update(yearSets);
@@ -64,11 +68,6 @@ class YearChart {
   update (data) {
 
     let ctx = this;
-
-    let years = new Array();
-    for(var i = 1971; i < 2016; i++){
-      years.push(i);
-    }
     let width = this.svgWidth;
     let setsperyear = new Array();
     
@@ -76,8 +75,8 @@ class YearChart {
       setsperyear[i] = 0;
     }
     for(var i = 0; i < data.length; i ++){
-      for(var j = 0; j < years.length; j++){
-        if(data[i].Year == years[j]){
+      for(var j = 0; j < this.years.length; j++){
+        if(data[i].Year == this.years[j]){
           setsperyear[j] ++;
         }
       }
@@ -87,7 +86,6 @@ class YearChart {
 
     let brushed = function(){
       let selectedYears = [];
-      console.log("in brush function");
       if(d3.event.selection != null && !(d3.event.selection[0] == 0 && d3.event.selection[1] == 0)){
         let lowBound = d3.event.selection[0];
         let highBound = d3.event.selection[1];
@@ -109,10 +107,10 @@ class YearChart {
     let brush = d3.brushX().extent([[0, 0], [ctx.svgWidth, ctx.svgHeight]])
     .on("end", brushed);
 
-    let popup = new Popup(this.legos);
+    let yearPopup = new YearPopup(this.legos);
     
     let mouseMove = function(d){
-      popup.mousemove(d)
+      yearPopup.mousemove(d)
     };
     
     this.svg.attr("class", "brush").call(brush);
@@ -145,21 +143,21 @@ class YearChart {
         .attr("cy", (this.svgHeight / 2))
         .data(setsperyear)
         .attr("r", d => Math.log(d) *3)
-        .data(years)
+        .data(this.years)
         .on("mousemove", mouseMove)
         .on('mouseover', function(d,i){
           d3.select(this)
           .transition()
           .style("stroke", "black")
           .style("stroke-width", "3");
-          popup.mouseover(d);
+          yearPopup.mouseover(d);
         })
         .on('mouseout', function(d,i){
           d3.select(this)
           .transition()
           .style("stroke", "black")
           .style("stroke-width", "1");
-          popup.mouseout(d)
+          yearPopup.mouseout(d)
         })
         .on('click', function(d, i) {
           
