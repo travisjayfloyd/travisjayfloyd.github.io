@@ -33,16 +33,16 @@ class TableChart {
      * variable tableElements.
      */
     update(fullarray) {
-      console.log(fullarray);
 
       let legos = new Array();
       for(var i = 0; i < fullarray.length; i++){
         let obj = {}
         obj['Name'] = fullarray[i].Name;
+        obj['Theme'] = fullarray[i].Theme;
         obj['Subtheme'] = fullarray[i].Subtheme;
         obj['Release_Year'] = parseInt(fullarray[i].Year, 10);
         obj['Pieces'] = parseInt(fullarray[i].Pieces, 10);
-        obj['Price'] = Number(fullarray[i].USD_MSRP);
+        obj['Price'] = Number(fullarray[i].USD_MSRP).toFixed(2);
         legos.push(obj);
       }
 
@@ -51,9 +51,7 @@ class TableChart {
     var sortAscending = true;
     var table = d3.select('#legoTable').append('table');
     var titles = d3.keys(legos[0]);
-    var titles = ["Name", "Subtheme", "Release_Year", "Pieces", "Price"]
-
-
+    var titles = ["Name","Theme", "Subtheme", "Release_Year", "Pieces", "Price"]
     var headers = table.append('thead').append('tr')
       .selectAll('th')
       .data(titles).enter()
@@ -63,7 +61,7 @@ class TableChart {
       })
       .on('click', function(d) {
         headers.attr('class', 'header');
-        if (d == "Name" || d == "Subtheme") { //these keys sort alphabetically
+        if (d == "Name" || d == "Subtheme") { //alphabetical sort
           if (sortAscending) {
             rows.sort(function(a, b) {
               return d3.ascending(a[d], b[d]);
@@ -77,7 +75,7 @@ class TableChart {
             sortAscending = true;
             this.className = 'des';
           }
-        } else {
+        } else { 
           if (sortAscending) {
             rows.sort(function(a, b) {
               return b[d] - a[d];
@@ -93,10 +91,19 @@ class TableChart {
           }
         }
       });
-
+      
+     
     let rows = table.append('tbody').selectAll('tr')
-      .data(legos).enter()
+      .data(legos)
+      .enter()
       .append('tr');
+
+    table.exit().remove();
+      
+
+    let enterSet = rows.enter();
+    rows.exit().remove();
+    enterSet.append("tr").attr('class', 'dataRow');
 
 
     rows.selectAll('td')
@@ -107,7 +114,8 @@ class TableChart {
             'name': d
           };
         });
-      }).enter()
+      })
+      .enter()
       .append('td')
       .attr('data-th', function(d) {
         return d.Name;
@@ -117,18 +125,17 @@ class TableChart {
       });
 
 
-      
     /*
+    
     // Create table rows
 
     let rows = d3.select("#legoTable").select("tbody").selectAll("tr")
-      .data(fullarray);
+      .data(legos);
 
     let enterSet = rows.enter();
     let updateSet = rows;
 
     rows.exit().remove();
-
 
     enterSet.append("tr").attr('class', 'dataRow');
 
@@ -167,7 +174,7 @@ class TableChart {
     d3.selectAll('.dataRow')
       .selectAll("th")
       .data(function(d) {
-        return [d.Year];
+        return [d.Release_Year];
       })
       .enter()
       .append("td")
@@ -198,4 +205,6 @@ class TableChart {
     */
   }
 }
+
+
   
