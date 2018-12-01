@@ -83,7 +83,7 @@ class ThemeStackedBarChart {
             ctx.currentSetX = currentX + ctx.stackScale(d[ctx.type]);
             return currentX;
         })
-        .attr("y", 40 + padding)
+        .attr("y", padding)
         .attr("class", this.type + "-sets")
         .attr("fill", (d)=>{return colorScale(d[ctx.type])})
         .on("mousemove", (d)=>nameTooltip.mousemove(d))

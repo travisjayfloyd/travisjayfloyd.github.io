@@ -42,7 +42,7 @@ class ThemePopup {
         .classed('popup-title', true)
       ;
       this.svgWidth = 800;
-      this.svgHeight = 150;
+      this.svgHeight = 100;
       this.themePopup.append("h2")
         .text("Each Bar Below Represents the Number of Pieces Per Set (Hover For the Name)");
       let sizeStackedSvg = this.themePopup.append("svg")
