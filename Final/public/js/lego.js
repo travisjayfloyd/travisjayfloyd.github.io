@@ -45,21 +45,31 @@ class Lego {
         let sortFunction;
         if(size == "biggest")
             sortFunction = function(a, b) {return (parseInt(b.Pieces) - parseInt(a.Pieces))}
+        else if(size == "avg" && howMany == 1) {
+            let filtered = sets.filter((set)=>set.Pieces != "NA")
+            let sorted = filtered.sort(function(a, b) {return (parseInt(b.Pieces) - parseInt(a.Pieces))});
+            return sorted[Math.floor(sorted.length/2)];
+        }
         else
-            sortFunction = function(a, b) {return (parseInt(a.Pieces) - parseInt(b.Pieces))}
+        sortFunction = function(a, b) {return (parseInt(a.Pieces) - parseInt(b.Pieces))}
         sets.sort(sortFunction);
         return sets.slice(0, howMany);
     }
-
+    
     getMostExpensiveSets(sets, howMany) {
         return this.getSetsByPrice(sets, howMany, "expensive")
     }
-
+    
     getSetsByPrice(sets, howMany, size) {
         let setsByPrice = sets.filter(function(set){return set.USD_MSRP != "NA"});
         let sortFunction;
         if(size == "expensive")
-            sortFunction = function(a, b) {return (parseInt(b.USD_MSRP) - parseInt(a.USD_MSRP))}
+        sortFunction = function(a, b) {return (parseInt(b.USD_MSRP) - parseInt(a.USD_MSRP))}
+        else if(size == "avg" && howMany == 1) {
+            let filtered = setsByPrice.filter((set)=>set.USD_MSRP != "NA")
+            let sorted = filtered.sort(function(a, b) {return (parseInt(b.USD_MSRP) - parseInt(a.USD_MSRP))});
+            return sorted[Math.floor(sorted.length/2)];
+        }
         else
             sortFunction = function(a, b) {return (parseInt(a.USD_MSRP) - parseInt(b.USD_MSRP))}
         setsByPrice.sort(sortFunction);
@@ -96,5 +106,15 @@ class Lego {
     getLeastExpensiveSet(year) {
         let yearSets = this.legos.filter(legoset => legoset.Year == year);
         return this.getSetsByPrice(yearSets, 1, "cheapest")[0];
+    }
+    
+    getAvgExpensiveSet(year) {
+        let yearSets = this.legos.filter(legoset => legoset.Year == year);
+        return this.getSetsByPrice(yearSets, 1, "avg");
+    }
+    
+    getAvgSizeSet(year) {
+        let yearSets = this.legos.filter(legoset => legoset.Year == year);
+        return this.getSets(yearSets, 1, "avg");
     }
 }

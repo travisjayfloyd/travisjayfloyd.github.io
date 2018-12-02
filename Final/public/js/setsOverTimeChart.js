@@ -18,16 +18,16 @@ class SetsOverTimeChart {
       this.xPadding = 55;
       this.yPadding = 0;
       this.mostArray = [];
-      this.leastArray = [];
+      this.avgArray = [];
       if(this.type == "Pieces") {
         years.forEach(year=>ctx.mostArray.push(ctx.lego.getBiggestSet(year)))
-        years.forEach(year=>ctx.leastArray.push(ctx.lego.getSmallestSet(year)))
+        years.forEach(year=>ctx.avgArray.push(ctx.lego.getAvgSizeSet(year)))
       } else {
         years.forEach(year=>ctx.mostArray.push(ctx.lego.getMostExpensiveSet(year)))
-        years.forEach(year=>ctx.leastArray.push(ctx.lego.getLeastExpensiveSet(year)))
+        years.forEach(year=>ctx.avgArray.push(ctx.lego.getAvgExpensiveSet(year)))
       }
       let yDataMost = ctx.mostArray.map(function(obj){return parseInt(obj[ctx.type])});
-      let yDataLeast = ctx.leastArray.map(function(obj){return parseInt(obj[ctx.type])});
+      let yDataLeast = ctx.avgArray.map(function(obj){return parseInt(obj[ctx.type])});
       let yDataMax = d3.max(yDataMost);
       let yDataMin = d3.min(yDataLeast);
       // Create the x and y scales; make
@@ -76,11 +76,17 @@ class SetsOverTimeChart {
 
       this.svg = d3.select(chartId);
       
-      let lineElem = this.svg.append("path")
+      this.svg.append("path")
       .datum(ctx.mostArray)
-      .attr("class", "line")
+      .attr("class", "mostline")
       .attr("d", this.line)
       .attr("transform", "translate(" + this.xPadding + ",-" + this.yPadding + ")");
+
+      // this.svg.append("path")
+      // .datum(ctx.avgArray)
+      // .attr("class", "leastline")
+      // .attr("d", this.line)
+      // .attr("transform", "translate(" + this.xPadding + ",-" + this.yPadding + ")");
     };  
   
     /**
@@ -92,27 +98,27 @@ class SetsOverTimeChart {
     update (years){
       if(years.length > 1){
         let ctx = this;
-        this.mostArray = [];
-        this.leastArray = [];
+        ctx.mostArray = [];
+        ctx.avgArray = [];
         let svgId = "";
         let h2Id = "";
         let displayType = "";
 
         if(this.type == "Pieces") {
           years.forEach(year=>ctx.mostArray.push(ctx.lego.getBiggestSet(year)))
-          years.forEach(year=>ctx.leastArray.push(ctx.lego.getSmallestSet(year)))
+          years.forEach(year=>ctx.avgArray.push(ctx.lego.getAvgSizeSet(year)))
           svgId = "#size-vs-time-svg";
           h2Id = "size-vs-time-title";
           displayType = "Size";
         } else {
           years.forEach(year=>ctx.mostArray.push(ctx.lego.getMostExpensiveSet(year)))
-          years.forEach(year=>ctx.leastArray.push(ctx.lego.getLeastExpensiveSet(year)))
+          years.forEach(year=>ctx.avgArray.push(ctx.lego.getAvgExpensiveSet(year)))
           svgId = "#price-vs-time-svg";
           h2Id = "price-vs-time-title";
           displayType = "Price";
         }
         let yDataMost = ctx.mostArray.map(function(obj){return parseInt(obj[ctx.type])});
-        let yDataLeast = ctx.leastArray.map(function(obj){return parseInt(obj[ctx.type])});
+        let yDataLeast = ctx.avgArray.map(function(obj){return parseInt(obj[ctx.type])});
         let yDataMax = d3.max(yDataMost);
         let yDataMin = d3.min(yDataLeast);
 
@@ -128,10 +134,14 @@ class SetsOverTimeChart {
 
         this.svg = d3.select(svgId);
 
-        this.svg.select(".line")
+        this.svg.select(".mostline")
           .transition()
           .duration(800)
           .attr("d", this.line(ctx.mostArray));
+          // this.svg.select(".leastline")
+          // .transition()
+          // .duration(800)
+          // .attr("d", this.line(ctx.avgArray));
         this.svg.select(this.xId)
           .attr("transform", "translate(" + this.xPadding + "," + (this.height - this.yPadding) + ")")
           .transition()

@@ -146,7 +146,7 @@ h3{
 }
 
 #price-vs-time-title, #price-vs-time-svg, #size-vs-time-title, #size-vs-time-svg{
-    padding-left: 240px;
+    padding-left: 260px;
 }
 
 .topChart {
@@ -202,9 +202,15 @@ th.asc:after {
     /* down */
     content: "\2193";
 }
-.line {
+.mostline {
     fill: none;
     stroke: #03396c;
+    stroke-width: 3;
+}
+
+.leastline {
+    fill: none;
+    stroke: #FF6666;
     stroke-width: 3;
 }
 
