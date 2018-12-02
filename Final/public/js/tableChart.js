@@ -133,20 +133,19 @@ class TableChart {
       return d.value
     })
     .style("text-align", "center")
-    .style("background-color", "#b3cde0")
-    /*.style("backgroud-color", function(d){
+    .style("background-color", function(d){
       if(selected == null){
-        return "#b3cde0";
+        return "#b3cde0"
       }
       else{
         if(d.name.Theme != selected.Theme){
-          return "#b3cde0";
+          return "#b3cde0"
         }
         else{
-          return "#FF6666";
+          return "#FF6666"
         }
       }
-    })*/
+    })
     .on('mouseover', function(d,i){
       d3.select(this)
       .style("background-color", "#FF6666");
@@ -157,6 +156,9 @@ class TableChart {
     .on('mouseout', function(d,i){
       d3.select(this)
       .style("background-color", "#b3cde0");
+      ctx.mostExpensiveSetsBarChart.update(fullarray);
+      ctx.biggestSetsBarChart.update(fullarray);
+      ctx.topThemesBarChart.update(fullarray);
     });
   }
 }
