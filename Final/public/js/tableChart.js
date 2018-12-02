@@ -169,23 +169,31 @@ class TableChart {
         }
       })
       .on('mouseover', function (d, i) {
-        d3.select(this)
-          .style("background-color", "#FF6666");
-        ctx.mostExpensiveSetsBarChart.update(fullarray, d);
-        ctx.biggestSetsBarChart.update(fullarray, d);
-        ctx.topThemesBarChart.update(fullarray, d);
+        //d3.select(this)
+          //.style("background-color", "#FF6666");
+        //ctx.mostExpensiveSetsBarChart.update(fullarray, d);
+        //ctx.biggestSetsBarChart.update(fullarray, d);
+        //ctx.topThemesBarChart.update(fullarray, d);
         ctx.tablePopup.mouseover(d);
       })
       .on('mousemove', function (d, i) {
         ctx.tablePopup.mousemove(d);
       })
       .on('mouseout', function (d, i) {
-        d3.select(this)
-          .style("background-color", "#b3cde0");
-        ctx.mostExpensiveSetsBarChart.update(fullarray);
-        ctx.biggestSetsBarChart.update(fullarray);
-        ctx.topThemesBarChart.update(fullarray);
+        //d3.select(this)
+          //.style("background-color", "#b3cde0");
+        //ctx.mostExpensiveSetsBarChart.update(fullarray);
+        //ctx.biggestSetsBarChart.update(fullarray);
+        //ctx.topThemesBarChart.update(fullarray);
         ctx.tablePopup.mouseout(d);
+      })
+      .on('click',function (d, i){
+        
+        d3.select(this)
+          .style("background-color", "#FF6666");
+        ctx.mostExpensiveSetsBarChart.update(fullarray, d);
+        ctx.biggestSetsBarChart.update(fullarray, d);
+        ctx.topThemesBarChart.update(fullarray, d);
       });
   }
 }
