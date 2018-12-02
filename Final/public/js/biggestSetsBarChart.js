@@ -9,8 +9,13 @@ class BiggestSetsBarChart {
 
   }
 
+  addTableChart(tableChart) {
+    this.tableChart = tableChart;
+  }
+
   //This function accepts a list of set objects
   update(sets, selected) {
+    let ctx = this;
     let biggestSets = this.lego.getBiggestSets(sets, 20);
     let width = 500;
     let height = 260;
@@ -101,11 +106,12 @@ class BiggestSetsBarChart {
           .on('mouseover', function(d,i){
             d3.select(this)
             .style("fill", "#FF6666");
-            
+            ctx.tableChart.colorByName(sets, d);
           })
           .on('mouseout', function(d,i){
             d3.select(this)
             .style("fill", d => colorScale(d.Pieces));
+            ctx.tableChart.colorByName(sets);
           });
 
         rects.exit().remove();
