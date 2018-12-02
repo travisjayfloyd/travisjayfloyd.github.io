@@ -113,7 +113,7 @@ h2{
     pointer-events: none;
 }
 
-.year-popup, .theme-popup, .nameTooltip{
+.year-popup, .theme-popup, .nameTooltip, .table-popup{
     padding: 5px;
 }
 

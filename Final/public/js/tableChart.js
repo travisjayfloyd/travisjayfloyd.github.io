@@ -9,6 +9,7 @@ class TableChart {
       this.legoData = data;
       this.mostExpensiveSetsBarChart = mostExpensiveSetsBarChart;
       this.biggestSetsBarChart = biggestSetsBarChart;
+      this.tablePopup = new TablePopup();
       this.prevHeader = {className:""};
       // Default values for the Table Headers
       this.sortAscending = true;
@@ -94,6 +95,7 @@ class TableChart {
         obj['Release_Year'] = parseInt(fullarray[i].Year, 10);
         obj['Pieces'] = parseInt(fullarray[i].Pieces, 10);
         obj['Price'] = Number(fullarray[i].USD_MSRP).toFixed(2);
+        obj['Image_URL'] = fullarray[i].Image_URL;
         legos.push(obj);
       }
 
@@ -152,6 +154,10 @@ class TableChart {
       ctx.mostExpensiveSetsBarChart.update(fullarray, d);
       ctx.biggestSetsBarChart.update(fullarray, d);
       ctx.topThemesBarChart.update(fullarray, d);
+      ctx.tablePopup.mouseover(d);
+    })
+    .on('mousemove', function(d,i){
+      ctx.tablePopup.mousemove(d);
     })
     .on('mouseout', function(d,i){
       d3.select(this)
@@ -159,6 +165,7 @@ class TableChart {
       ctx.mostExpensiveSetsBarChart.update(fullarray);
       ctx.biggestSetsBarChart.update(fullarray);
       ctx.topThemesBarChart.update(fullarray);
+      ctx.tablePopup.mouseout(d);
     });
   }
 }

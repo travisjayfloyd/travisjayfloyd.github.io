@@ -1,7 +1,6 @@
 class TablePopup {
 
-    constructor(type) {
-      this.type = type;
+    constructor() {
       //----------------------------------------
       // TablePopup
       //----------------------------------------
@@ -22,9 +21,10 @@ class TablePopup {
      * Gets the HTML content for a tablePopup.
      */
     tablePopup_html(set) {
-      let text = "<div class='tablePopup'>"
-      text += "<h2>" + set.Name + "</h2>";
-      text += "<img src='" + set.Image_URL + "' alt='legoSet' height='42' width='42'>";
+        console.log("table popup html: ", set);
+      let text = "<div class='table-popup'>"
+      text += "<h2>" + set.name.Name + "</h2>";
+      text += "<img src='" + set.name.Image_URL + "' alt='legoSet' height='100' width='100'>";
   
       text += "</div>"
       return text;
