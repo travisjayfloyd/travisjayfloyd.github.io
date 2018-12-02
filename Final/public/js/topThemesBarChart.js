@@ -5,6 +5,7 @@ class TopThemesBarChart {
    */
   constructor(data, tableChart, mostExpensiveSetsBarChart, biggestSetsBarChart) {
     this.legoData = data;
+    console.log("legodata", data);
     this.tableChart = tableChart;
     this.mostExpensiveSetsBarChart = mostExpensiveSetsBarChart;
     this.biggestSetsBarChart = biggestSetsBarChart;
