@@ -79,13 +79,12 @@ class TableChart {
   colorByName(sets, selected) {
     d3.selectAll('.dataRow')
       .select("td")
-      .data(sets)
       .style("background-color", function (d) {
         if (selected == null) {
           return "#b3cde0"
         }
         else {
-          if (d.Name != selected.Name && d.Pieces != selected.Pieces) {
+          if (d.Name != selected.Name) {
             return "#b3cde0"
           }
           else {
