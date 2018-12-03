@@ -36,6 +36,7 @@ class SetsOverTimeChart {
       .domain(years)
       .range([0, this.width-2*this.xPadding])
       .padding(0.1);
+      this.xStart = this.xScale(1971);
       this.yScale = d3.scaleLinear()
       .domain([0, yDataMax])//data set
       .range([this.height, 0]);//pixels
@@ -70,7 +71,11 @@ class SetsOverTimeChart {
 
       this.line = d3.line()
         .x(function(d, i) { 
-          return ctx.xScale(d.Year); })
+          console.log("in line 1971: ", ctx.xStart);
+          console.log("in line d.Year: ", ctx.xScale(d.Year));
+          console.log("in line added: ", (ctx.xScale(d.Year) + ctx.xStart));
+          return (ctx.xScale(d.Year) + ctx.xStart);
+        })
         .y(function(d) { 
           return ctx.yScale(d[ctx.type]); })
 
@@ -103,7 +108,7 @@ class SetsOverTimeChart {
         let svgId = "";
         let h2Id = "";
         let displayType = "";
-
+        
         if(this.type == "Pieces") {
           years.forEach(year=>ctx.mostArray.push(ctx.lego.getBiggestSet(year)))
           years.forEach(year=>ctx.avgArray.push(ctx.lego.getAvgSizeSet(year)))
@@ -121,16 +126,17 @@ class SetsOverTimeChart {
         let yDataLeast = ctx.avgArray.map(function(obj){return parseInt(obj[ctx.type])});
         let yDataMax = d3.max(yDataMost);
         let yDataMin = d3.min(yDataLeast);
-
+        
         let yearStr = ""
         yearStr = Math.min(...years) + " - " + Math.max(...years)
-
+        
         document.getElementById(h2Id).innerHTML = displayType + " of Sets Over the Years " + yearStr;
-
+        
         this.xScale
         .domain(years);
         this.yScale
         .domain([0, yDataMax]);
+        // this.xStart = this.xScale(1971);
 
         this.svg = d3.select(svgId);
 
@@ -146,7 +152,12 @@ class SetsOverTimeChart {
           .attr("transform", "translate(" + this.xPadding + "," + (this.height - this.yPadding) + ")")
           .transition()
           .duration(800)
-          .call(this.xAxisSetsOverTime);
+          .call(this.xAxisSetsOverTime)
+          .selectAll("text")
+          .attr("y", 0)
+          .attr("x", 10)
+          .attr("transform", "rotate(90)")
+          .style("text-anchor", "start");;
         this.svg.select(this.yId)
           .attr("transform", "translate(" + this.xPadding + ",-" + this.yPadding + ")")
           .transition()
