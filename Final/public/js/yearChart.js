@@ -130,7 +130,7 @@ class YearChart {
 
     let colorScale = d3.scaleLinear()
       .domain([220, 0])
-      .range(["#FF6666", "#8B3626"]);
+      .range(["#b3cde0", "#03396c"]);
 
     // Create the chart by adding circle elements representing each election year
     this.svg.append('line')
@@ -221,7 +221,7 @@ class YearChart {
       .attr("cx", "12")
       .attr("cy", "25")
       .attr("r", "7")
-      .style("fill", "#8B3626")
+      .style("fill", "#03396c")
       .style("stroke", "black")
       .style("stroke-width", "1");
 
@@ -238,7 +238,7 @@ class YearChart {
       .attr("cx", "100")
       .attr("cy", "25")
       .attr("r", "15")
-      .style("fill", "#FF6666")
+      .style("fill", "#b3cde0")
       .style("stroke", "black")
       .style("stroke-width", "1");
 
