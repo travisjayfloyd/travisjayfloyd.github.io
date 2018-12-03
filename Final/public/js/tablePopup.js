@@ -21,10 +21,19 @@ class TablePopup {
      * Gets the HTML content for a tablePopup.
      */
     tablePopup_html(set) {
-        console.log("table popup html: ", set);
       let text = "<div class='table-popup'>"
-      text += "<h2>" + set.name.Name + "</h2>";
-      text += "<img src='" + set.name.Image_URL + "' alt='legoSet' height='100' width='100'>";
+      let nameStr = "";
+      let imageUrl = "";
+      if(set.name){
+        nameStr = set.name.Name;
+        imageUrl = set.name.Image_URL;
+      }
+      else {
+        nameStr = set.Name;
+        imageUrl = set.Image_URL;
+      }
+      text += "<h2>" + nameStr + "</h2>";
+      text += "<img src='" + imageUrl + "' alt='legoSet' height='100' width='100'>";
   
       text += "</div>"
       return text;
