@@ -133,6 +133,7 @@ class SetsOverTimeChart {
         .domain(years);
         this.yScale
         .domain([0, yDataMax]);
+        // console.log("xscale", this.xScale);
         // this.xStart = this.xScale(1971);
 
         this.svg = d3.select(svgId);

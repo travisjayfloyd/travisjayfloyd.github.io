@@ -102,7 +102,17 @@ class MostExpensiveSetsBarChart {
         else {
           return colorScale(d.USD_MSRP);
         }
-      });
+      })
+      .on('mouseover', function (d, i) {
+        d3.select(this)
+          .style("fill", "#FF6666");
+        ctx.tableChart.colorByName(sets, d);
+      })
+      .on('mouseout', function (d, i) {
+        d3.select(this)
+          .style("fill", d => colorScale(d.USD_MSRP));
+        ctx.tableChart.colorByName(sets);
+      });;
 
     //Mouse actions on hover.
     rects

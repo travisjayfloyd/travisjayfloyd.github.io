@@ -102,6 +102,16 @@ class BiggestSetsBarChart {
         else {
           return colorScale(d.Pieces);
         }
+      })
+      .on('mouseover', function (d, i) {
+        d3.select(this)
+          .style("fill", "#FF6666");
+        ctx.tableChart.colorByName(sets, d);
+      })
+      .on('mouseout', function (d, i) {
+        d3.select(this)
+          .style("fill", d => colorScale(d.Pieces));
+        ctx.tableChart.colorByName(sets);
       });
 
     //Sets mouse actions on biggest sets bar chart
