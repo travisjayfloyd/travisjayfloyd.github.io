@@ -17,6 +17,7 @@ class TopThemesBarChart {
   update(legoEntries, selected) {
     let ctx = this;
     let topThemes = this.lego.getTopThemes(legoEntries, 20);
+    console.log("table chart update");
     // let tableChart = new TableChart();
     // let mostExpensiveSetsBarChart = new MostExpensiveSetsBarChart();
     // let biggestSetsBarChart = new BiggestSetsBarChart();
@@ -73,11 +74,12 @@ class TopThemesBarChart {
       //.style("fill", d => colorScale(d.sum));
       .style("fill", function (d) {
         if (selected != null) {
-          if (d.Theme != selected.name.Theme) {
+          if (selected.name && d.Name != selected.name.Name) {
             return colorScale(d.sum);
-          }
-          else {
-            return "#b3cde0";
+          } else if(d.Name != selected.Name) {
+            return colorScale(d.sum);
+          } else {
+            return "FF6666";
           }
         }
         else {

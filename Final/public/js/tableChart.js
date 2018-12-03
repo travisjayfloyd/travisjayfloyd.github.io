@@ -23,44 +23,44 @@ class TableChart {
       .append('th')
       .text(function (d) {
         return d
-      })
-      .on('click', function (d) {
-        if (d == "Release Year")
-          d = "Release_Year";
-        tHead.attr('class', 'header');
-        if (d == "Name" || d == "Subtheme" || d == "Theme") { //alphabetical sort
-          if (this.sortAscending) {
-            d3.selectAll('.dataRow').sort(function (a, b) {
-              return d3.ascending(a[d], b[d]);
-            });
-            this.sortAscending = false;
-            this.className = 'asc';
-          } else {
-            d3.selectAll('.dataRow').sort(function (a, b) {
-              return d3.descending(a[d], b[d]);
-            });
-            this.sortAscending = true;
-            this.className = 'des';
-          }
-        } else {
-          if (this.sortAscending) {
-            d3.selectAll('.dataRow').sort(function (a, b) {
-              return b[d] - a[d];
-            });
-            this.sortAscending = false;
-            this.className = 'asc';
-          } else {
-            d3.selectAll('.dataRow').sort(function (a, b) {
-              return a[d] - b[d];
-            });
-            this.sortAscending = true;
-            this.className = 'des';
-          }
-        }
-        if (ctx.prevHeader && ctx.prevHeader != this)
-          ctx.prevHeader.className = 'noSort';
-        ctx.prevHeader = this;
       });
+      // .on('click', function (d) {
+      //   if (d == "Release Year")
+      //     d = "Release_Year";
+      //   tHead.attr('class', 'header');
+      //   if (d == "Name" || d == "Subtheme" || d == "Theme") { //alphabetical sort
+      //     if (this.sortAscending) {
+      //       d3.selectAll('.dataRow').sort(function (a, b) {
+      //         return d3.ascending(a[d], b[d]);
+      //       });
+      //       this.sortAscending = false;
+      //       this.className = 'asc';
+      //     } else {
+      //       d3.selectAll('.dataRow').sort(function (a, b) {
+      //         return d3.descending(a[d], b[d]);
+      //       });
+      //       this.sortAscending = true;
+      //       this.className = 'des';
+      //     }
+      //   } else {
+      //     if (this.sortAscending) {
+      //       d3.selectAll('.dataRow').sort(function (a, b) {
+      //         return b[d] - a[d];
+      //       });
+      //       this.sortAscending = false;
+      //       this.className = 'asc';
+      //     } else {
+      //       d3.selectAll('.dataRow').sort(function (a, b) {
+      //         return a[d] - b[d];
+      //       });
+      //       this.sortAscending = true;
+      //       this.className = 'des';
+      //     }
+      //   }
+      //   if (ctx.prevHeader && ctx.prevHeader != this)
+      //     ctx.prevHeader.className = 'noSort';
+      //   ctx.prevHeader = this;
+      // });
 
     let shortData = ctx.legoData.slice(0, 150);
     shortData.push({ "Name": "See More Entries By Selecting Years At Top" })
@@ -98,7 +98,6 @@ class TableChart {
   colorByTheme(sets, selected){
     d3.selectAll('.dataRow')
       .select("td")
-      .data(sets)
       .style("background-color", function (d) {
         if (selected == null) {
           return "#b3cde0"

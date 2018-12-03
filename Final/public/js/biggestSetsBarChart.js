@@ -71,10 +71,11 @@ class BiggestSetsBarChart {
       .attr("width", xScale.bandwidth())
       .style("fill", function (d) {
         if (selected != null) {
-          if (d.Name != selected.name.Name) {
+          if (selected.name && d.Name != selected.name.Name) {
             return colorScale(d.Pieces);
-          }
-          else {
+          } else if(d.Name != selected.Name) {
+            return colorScale(d.Pieces);
+          } else {
             return "FF6666";
           }
         }
