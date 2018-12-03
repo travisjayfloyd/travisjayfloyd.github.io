@@ -70,10 +70,7 @@ class SetsOverTimeChart {
         .call(ctx.yAxisSetsOverTime);
 
       this.line = d3.line()
-        .x(function(d, i) { 
-          console.log("in line 1971: ", ctx.xStart);
-          console.log("in line d.Year: ", ctx.xScale(d.Year));
-          console.log("in line added: ", (ctx.xScale(d.Year) + ctx.xStart));
+        .x(function(d, i) {
           return (ctx.xScale(d.Year) + ctx.xStart);
         })
         .y(function(d) { 
