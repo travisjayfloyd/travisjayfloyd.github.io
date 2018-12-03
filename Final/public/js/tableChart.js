@@ -213,9 +213,9 @@ class TableChart {
           .style("background-color", "#b3cde0");
         d3.select(this)
           .style("background-color", "#FF6666");
-        ctx.mostExpensiveSetsBarChart.update(fullarray, d);
-        ctx.biggestSetsBarChart.update(fullarray, d);
-        ctx.topThemesBarChart.update(fullarray, d);
+        // ctx.mostExpensiveSetsBarChart.update(fullarray, d);
+        // ctx.biggestSetsBarChart.update(fullarray, d);
+        // ctx.topThemesBarChart.update(fullarray, d);
       });
   }
 }
