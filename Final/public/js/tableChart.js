@@ -70,10 +70,12 @@ class TableChart {
     // this.table.style("visibility", "hidden");
   }
 
+  //adds global topthemesbarchart to the tablechart class
   addTopThemesChart(topThemesBarChart) {
     this.topThemesBarChart = topThemesBarChart;
   }
 
+  //this method allows for cells to be highlighted depending on input 
   colorByName(sets, selected) {
     d3.selectAll('.dataRow')
       .select("td")
@@ -107,6 +109,8 @@ class TableChart {
     // let topThemesBarChart = new TopThemesBarChart();
 
     let legos = new Array();
+
+    //creates custom array for table.
     for (var i = 0; i < fullarray.length; i++) {
       let obj = {}
       obj['Name'] = fullarray[i].Name;
@@ -170,7 +174,7 @@ class TableChart {
       })
       .on('mouseover', function (d, i) {
         //d3.select(this)
-          //.style("background-color", "#FF6666");
+        //.style("background-color", "#FF6666");
         //ctx.mostExpensiveSetsBarChart.update(fullarray, d);
         //ctx.biggestSetsBarChart.update(fullarray, d);
         //ctx.topThemesBarChart.update(fullarray, d);
@@ -181,14 +185,13 @@ class TableChart {
       })
       .on('mouseout', function (d, i) {
         //d3.select(this)
-          //.style("background-color", "#b3cde0");
+        //.style("background-color", "#b3cde0");
         //ctx.mostExpensiveSetsBarChart.update(fullarray);
         //ctx.biggestSetsBarChart.update(fullarray);
         //ctx.topThemesBarChart.update(fullarray);
         ctx.tablePopup.mouseout(d);
       })
-      .on('click',function (d, i){
-        
+      .on('click', function (d, i) {
         d3.select(this)
           .style("background-color", "#FF6666");
         ctx.mostExpensiveSetsBarChart.update(fullarray, d);
