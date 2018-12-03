@@ -80,13 +80,31 @@ class TableChart {
     d3.selectAll('.dataRow')
       .select("td")
       .data(sets)
-      .style("text-align", "center")
       .style("background-color", function (d) {
         if (selected == null) {
           return "#b3cde0"
         }
         else {
           if (d.Name != selected.Name && d.Pieces != selected.Pieces) {
+            return "#b3cde0"
+          }
+          else {
+            return "#FF6666"
+          }
+        }
+      })
+  }
+
+  colorByTheme(sets, selected){
+    d3.selectAll('.dataRow')
+      .select("td")
+      .data(sets)
+      .style("background-color", function (d) {
+        if (selected == null) {
+          return "#b3cde0"
+        }
+        else {
+          if (d.Theme != selected.Theme) {
             return "#b3cde0"
           }
           else {

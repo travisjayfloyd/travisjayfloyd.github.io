@@ -92,7 +92,7 @@ class TopThemesBarChart {
         d3.select(this)
           .style("fill", "#b3cde0");
         if(legoEntries.length > 150) legoEntries = legoEntries.slice(0, 150);
-        ctx.tableChart.update(legoEntries, d);
+        ctx.tableChart.colorByTheme(legoEntries, d);
         //ctx.mostExpensiveSetsBarChart.update(legoEntries);
         //ctx.biggestSetsBarChart.update(legoEntries, d);
       })
@@ -100,7 +100,7 @@ class TopThemesBarChart {
         d3.select(this)
           .style("fill", d => colorScale(d.sum));
         if(legoEntries.length > 150) legoEntries = legoEntries.slice(0, 150);
-        ctx.tableChart.update(legoEntries);
+        ctx.tableChart.colorByTheme(legoEntries);
       });
     // .on("mousemove", (d)=>themePopup.mousemove(d))
     // .on("mouseover", (d)=>themePopup.mouseover(d))
