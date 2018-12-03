@@ -129,7 +129,7 @@ class YearChart {
     this.svg.attr("class", "brush").call(brush);
 
     let colorScale = d3.scaleLinear()
-      .domain([220, 0])
+      .domain([350, 0])
       .range(["#b3cde0", "#03396c"]);
 
     // Create the chart by adding circle elements representing each election year
