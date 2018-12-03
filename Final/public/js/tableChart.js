@@ -192,6 +192,8 @@ class TableChart {
         ctx.tablePopup.mouseout(d);
       })
       .on('click', function (d, i) {
+        d3.selectAll('td')
+          .style("background-color", "#b3cde0");
         d3.select(this)
           .style("background-color", "#FF6666");
         ctx.mostExpensiveSetsBarChart.update(fullarray, d);
