@@ -41,25 +41,27 @@ Images have been labeled and uploaded to drive with following names.
 
 #7: Must-Have Features. List the features without which you would consider your project to be a failure.
  - Bubble chart containing all years of data
- - Each bubble is hoverable with a pop up that shows themes from that year.
+ - Each bubble is hoverable with a pop up that shows basic info from that year.
  - Each bubble is selectable and modifies information below.
- - Bar graph below bubble chart that initially shows top 10 themes but once a bubble is selected shows amount of sets in each theme that    year.
- - Line graph next to bar chart showing top 10 most piece sets but changes to top 10 most pieces for the selected year once bubble          selected.
- - Table of sets for the selected year once a bubble is selected. 
- - Each set is hoverable with more information on that specific set.
+ - Bar graph below bubble chart that initially shows top themes, biggest sets, and most expensive sets but once a bubble is selected
+ shows amount of sets in each theme that year.
+ - Line graph showing average pieces and average prices of sets but changes to brushed years if brushed.
+ - Table of sets for the selected year/s once a bubble is selected. 
+ - Each set is hoverable with images of that specific set.
 
 #8: Optional Features. List the features which you consider to be nice to have, but not critical.
  - The bar chart can be selected to show sets for only that theme in the table.
- - Instead of the name of the set appearing in the table and image of the set will appear.
  - Instead of clicking on the set to bring the popup, they will be hoverable and if clicked more info will be shown including the pieces    needed for that set.
 
 #9: Project Schedule. Make sure that you plan your work so that you can avoid a big rush right before the final project deadline, and delegate different modules and responsibilities among your team members. Write this in terms of weekly deadlines.
+
+This was our initial Schedule however with the changing scope the schedule changed also.
 
 November 12 - Must-Have Features
   -Grab data from SQL - Chase
   -Bar Graph - Chase
   -BubbleChart - Travis
-  - Hover menu - Travis
+  -Hover menu - Travis
   
 November 19 - Must-Have Features
   -Line Graph - Travis
@@ -76,3 +78,16 @@ November 30 - Final Submission
 
 
 use python -m SimpleHTTPServer (port) to run project locally 
+
+#10: Final Implementation. Our current implementation allows for a user to select dots on a timeline that represent each year. The size
+of each circle represnts the amount of sets released each year. Once a dot is selected the table updates show only sets released that 
+year. The timeline is also brushable which allows the user to select multiple years so all other visualization will show only the data 
+from the selected time frame. There is also a popup that shows basic information on the year that is hovered over. We also have bar 
+graphs that show the themes that have the most amount of sets, the sets with the most pieces, and the sets that are the most expensive.
+Once a year is selected the bar graphs will change to show their respective information during the selected year/s. The top themes graph 
+can also be clicked on to show a visualization that shows the amount of pieces and prices for all sets in the selected theme. There is
+also a table which shows all sets and information on each set that were released on the selected year. The table can be sorted by 
+clicking on each table header. Clicking on it will switch sorting from descending and ascending. Each row is hoverable that will have an
+image popup of the selected set. Each cell is clickable which will update the bar graphs to highlight that same data if it is in the
+graph. There are also two line graphs that show the average price of sets and average number of pieces in sets over all years or
+selected years.
